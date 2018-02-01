@@ -1,0 +1,21 @@
+{% load static %}
+<!doctype html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>momory</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link href="{% static "css/kkomory.css" %}" media="all" rel="Stylesheet" type="text/css" />
+    <link href="{% static "css/colors.css" %}" media="all" rel="Stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="wrap">
+        {% block content %} {% endblock %}
+    </div>
+</body>
+
+</html>
