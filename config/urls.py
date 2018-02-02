@@ -6,6 +6,8 @@ from django.views.static import serve
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    path('passhint/', include('passhint.urls')),
 ]
 
 
