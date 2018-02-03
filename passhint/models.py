@@ -24,7 +24,6 @@ class Site(TimeStampedModel):
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL)
     name = models.CharField(max_length=50, unique=True)
-    rule_set = models.ForeignKey('RuleSet',blank=True, null=True, on_delete=models.SET_NULL)
     tag = models.CharField(max_length=200)
     hit = models.BigIntegerField(default=0)
     main_url = models.CharField(max_length=100, validators=[url_validator])
@@ -59,6 +58,7 @@ class Rule(TimeStampedModel):
 class RuleSet(TimeStampedModel):
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL)
+    site = models.ForeignKey(Site, on_delete=models.CASCADE)
 
     len_min = models.SmallIntegerField(blank=True, null=True)
     len_max = models.SmallIntegerField(blank=True, null=True)
@@ -76,3 +76,6 @@ class RuleSet(TimeStampedModel):
     inc_upper = models.BooleanField(default=False)
     inc_number = models.BooleanField(default=False)
     inc_letter = models.BooleanField(default=False)
+
+    def __str__(self):
+        return '{}-{}'.format(self.site, self.created_at)
