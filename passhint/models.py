@@ -31,6 +31,10 @@ class Site(TimeStampedModel):
     def __str__(self):
         return self.name
 
+    @property
+    def get_rule_set_list(self):
+        return self.rule_sets.latest('created_at')
+        
 
 class Rule(TimeStampedModel):
 
@@ -58,7 +62,7 @@ class Rule(TimeStampedModel):
 class RuleSet(TimeStampedModel):
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL)
-    site = models.ForeignKey(Site, on_delete=models.CASCADE)
+    site = models.ForeignKey(Site, on_delete=models.CASCADE, related_name='rule_sets')
 
     len_min = models.SmallIntegerField(blank=True, null=True)
     len_max = models.SmallIntegerField(blank=True, null=True)

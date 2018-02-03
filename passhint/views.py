@@ -7,7 +7,6 @@ def wow(request):
 
 def search(request):
     q = request.GET.get('q')
-    print(q)
 
     site = Site.objects.get(tag__icontains=q)
 
