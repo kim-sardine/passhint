@@ -30,7 +30,7 @@ class Site(TimeStampedModel):
     main_url = models.CharField(max_length=100, validators=[url_validator])
 
     def __str__(self):
-        return name
+        return self.name
 
 
 class Rule(TimeStampedModel):
@@ -43,8 +43,8 @@ class Rule(TimeStampedModel):
     )
 
     name = models.CharField(max_length=50, unique=True)
-    regex = models.CharField(max_length=200)
-    regex_result = models.BooleanField()
+    regex = models.CharField(max_length=200, blank=True, null=True)
+    regex_result = models.NullBooleanField()
     desc_ko = models.CharField(max_length=200)
     desc_en = models.CharField(max_length=200)
     desc_short = models.CharField(max_length=200)
@@ -53,7 +53,7 @@ class Rule(TimeStampedModel):
     level = models.CharField(max_length=15, choices=LEVEL_CHOICES)
 
     def __str__(self):
-        return '{}-{}'.format(name, desc_short)
+        return '{}-{}'.format(self.name, self.desc_short)
 
 
 class RuleSet(TimeStampedModel):
@@ -63,16 +63,16 @@ class RuleSet(TimeStampedModel):
     len_min = models.SmallIntegerField(blank=True, null=True)
     len_max = models.SmallIntegerField(blank=True, null=True)
     
-    exc_special = models.NullBooleanField(default=None)
-    exc_space = models.NullBooleanField(default=None)
-    exc_id = models.NullBooleanField(default=None)
-    exc_same = models.NullBooleanField(default=None)
-    exc_series = models.NullBooleanField(default=None)
-    exc_id = models.NullBooleanField(default=None)
-    exc_common = models.NullBooleanField(default=None)
+    exc_special = models.BooleanField(default=False)
+    exc_space = models.BooleanField(default=False)
+    exc_id = models.BooleanField(default=False)
+    exc_same = models.BooleanField(default=False)
+    exc_series = models.BooleanField(default=False)
+    exc_id = models.BooleanField(default=False)
+    exc_common = models.BooleanField(default=False)
     
-    inc_special = models.NullBooleanField(default=None)
-    inc_lower = models.NullBooleanField(default=None)
-    inc_upper = models.NullBooleanField(default=None)
-    inc_number = models.NullBooleanField(default=None)
-    inc_letter = models.NullBooleanField(default=None)
+    inc_special = models.BooleanField(default=False)
+    inc_lower = models.BooleanField(default=False)
+    inc_upper = models.BooleanField(default=False)
+    inc_number = models.BooleanField(default=False)
+    inc_letter = models.BooleanField(default=False)
