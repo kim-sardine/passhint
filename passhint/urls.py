@@ -3,6 +3,10 @@ from . import views
 
 app_name = 'passhint'
 urlpatterns = [
+    path('', views.main, name='main'),
     path('wow/', views.wow, name='wow'),
     path('search/', views.search, name='search'),
+    path('autocomplete/', views.autocomplete, name='autocomplete'),
+
+    path('<str:site_name>/', views.detail, name='detail')
 ]

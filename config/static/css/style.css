@@ -1,0 +1,14 @@
+/* loading - the AJAX indicator */
+.ui-autocomplete-loading {
+    background: white url('/static/img/loading_16.gif') right center no-repeat;
+}
+ 
+/* scroll results */
+.ui-autocomplete {
+    max-height: 250px;
+    overflow-y: auto;
+    /* prevent horizontal scrollbar */
+    overflow-x: hidden;
+    /* add padding for vertical scrollbar */
+    padding-right: 5px;
+}

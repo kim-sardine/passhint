@@ -34,6 +34,10 @@ class Site(TimeStampedModel):
     @property
     def get_rule_set_list(self):
         return self.rule_sets.latest('created_at')
+
+    @property
+    def get_tag_list(self):
+        return self.tag.split(',')
         
 
 class Rule(TimeStampedModel):
