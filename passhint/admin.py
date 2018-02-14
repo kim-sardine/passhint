@@ -3,7 +3,7 @@ from .models import Site, Rule, RuleSet
 
 @admin.register(Site)
 class SiteAdmin(admin.ModelAdmin):
-    list_display = ('name', 'main_url', 'created_at')
+    list_display = ('name', 'main_url', 'status', 'created_at')
 
 @admin.register(Rule)
 class RuleAdmin(admin.ModelAdmin):

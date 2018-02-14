@@ -4,6 +4,8 @@ from django.forms import URLField
 from django.utils.text import slugify
 from django.forms import ValidationError
 from django.utils import timezone
+from django.db.models import Q
+
 import datetime
 
 def url_validator(url):
@@ -42,6 +44,14 @@ class Site(TimeStampedModel):
     def __str__(self):
         return self.name
 
+    class Meta:
+        ordering = ['-created_at']
+
+    def save(self, *args, **kwargs):
+        
+        self.name = slugify(self.name, allow_unicode=True)
+        super().save(*args, **kwargs)
+
     @property
     def get_rule_set_list(self):
         return self.rule_sets.latest('created_at')
@@ -50,11 +60,29 @@ class Site(TimeStampedModel):
     def get_tag_list(self):
         return self.tag.split(',')
 
-    def save(self, *args, **kwargs):
+    @staticmethod
+    def get_lastest_by_name(site_name, include_waiting=False):
         
-        self.name = slugify(self.name, allow_unicode=True)
-        super().save(*args, **kwargs)
-        
+        # service 중인 site가 1순위
+        site = Site.objects.filter(
+                    Q(name = site_name) &
+                    Q(status = 'service'))
+
+        if site:
+            site = site.latest('created_at')
+            return site
+
+        #  waiting status의 Site 까지 필요로 하는 요청이라면
+        if include_waiting:
+            site = Site.objects.filter(
+                        Q(name = site_name) &
+                        Q(status = 'waiting'))
+
+            if site:
+                site = site.latest('created_at')
+                return site
+
+        raise Site.DoesNotExist 
 
 class Rule(TimeStampedModel):
 
@@ -103,6 +131,9 @@ class RuleSet(TimeStampedModel):
 
     def __str__(self):
         return '{}-{}'.format(self.site, self.created_at)
+
+    class Meta:
+        ordering = ['-created_at']
 
     @staticmethod
     def get_count_recent_1day(user):

@@ -1,12 +1,17 @@
+{% extends "layout.html" %}
 {% load i18n %}
+{% load widget_tweaks %}
+
+{% block content %}
 hello
 
 {% if sites %}
     {% for site in sites  %}
         {{ site.name }}
-        {{ site.get_rule_set_list }}
+        {{ site.get_rule_set_list.len_min }}
         <br />
     {% endfor %}
 {% else %}
     {% trans 'No Result.. Please Report It And Get Points' %}
 {% endif %}
+{% endblock content %}

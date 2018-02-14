@@ -1,4 +1,10 @@
+{% extends "layout.html" %}
+{% load i18n %}
+{% load widget_tweaks %}
+
+{% block content %}
 {{ site.name }}
 {{ site.main_url }}
 {{ site.user.username }}
 {{ site.created_at }}
+{% endblock content %}

@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, Http404
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q, Count
 
 import json
 
@@ -21,10 +22,8 @@ def main(request):
         form = SiteSearchForm(request.POST)
         if form.is_valid():
             site_name = form.cleaned_data.get('site_name')
-            
             try:
-                # 강력한 검사
-                site = Site.objects.get(name__iexact = site_name, status='service')
+                site = Site.get_lastest_by_name(site_name)
             except Site.DoesNotExist:
                 response = redirect('passhint:site_search')
                 response['Location'] += '?q='+site_name
@@ -45,9 +44,21 @@ def site_search(request):
     q = request.GET.get('q')
 
     # TODO 검색 방식
-    # 약한 검사
-    sites = Site.objects.filter(tag__icontains=q, status='service').order_by('name')
+    # 현재 : 서비스 중인 site 중 태그 icontain 검색
+    results = Site.objects.filter(
+        Q(tag__icontains = q) &
+        Q(status = 'service')
+        ).values('name').order_by('name').annotate(Count('name'))
 
+    # TODO query 효율
+    # name 별로 돌면서 최신 site 정보를 가져온다
+    sites = []
+    for result in results:
+        name = result.get('name')
+        site = Site.objects.filter(name=name).latest('created_at')
+        sites.append(site)
+    
+    print(sites)
     return render(request, 'passhint/site_search.html', {
         'sites' : sites,
     })
@@ -55,13 +66,16 @@ def site_search(request):
 
 def site_detail(request, site_name):
     
-    site = get_object_or_404(Site, name=site_name, status='service')
-    
-    return render(request, 'passhint/site_detail.html', {
+    try:
+        site = Site.get_lastest_by_name(site_name)
+    except Site.DoesNotExist:
+        raise Http404
+    else:
+        return render(request, 'passhint/site_detail.html', {
         'site' : site,
     })
-
-
+    
+# 사이트 등록 요청
 @login_required
 def site_report(request):
   
@@ -82,12 +96,12 @@ def site_report(request):
         'form' : form,
     })
 
-
 # TODO passhint 확인 가이드가 필요할 듯
+# 사이트에 대한 RuleSet 등록
 @login_required
 def site_report_ruleset(request, site_name):
     
-    site = get_object_or_404(Site, name=site_name)
+    site = Site.get_lastest_by_name(site_name, ['waiting', 'service',])
 
     # 최대 Report-RuleSet 갯수 : 10개 / 1일
     if RuleSet.get_count_recent_1day(request.user) >= MAXIMUM_REPORT_RULESET_NUMBER:
@@ -118,10 +132,13 @@ def site_report_ruleset(request, site_name):
 def autocomplete(request):
     
     q = request.GET.get('term', '')
-    sites = Site.objects.filter(tag__icontains = q, status='service')[:10]
-    results = []
 
-    for site in sites:
-        results.append(site.name)
+    # 서비스 중 인 site 중 검색하여 name으로 group_by 한 후 name 만 사용한다
+    sites = Site.objects.filter(
+        Q(tag__icontains = q) &
+        Q(status = 'service')
+        ).values('name').order_by('name').annotate(Count('name'))
+
+    results = [site.get('name') for site in sites]
     
     return JsonResponse(results, safe=False)

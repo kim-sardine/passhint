@@ -1,5 +1,7 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
+from django.utils.text import slugify
+
 from .models import Site, RuleSet
 
 class SiteSearchForm(forms.Form):
@@ -9,6 +11,10 @@ class SiteSearchForm(forms.Form):
             attrs={'placeholder':'서비스 이름을 입력하세요', 'id':'search_name'}
             )
         )
+
+    def clean_site_name(self):
+        site_name = self.cleaned_data.get('site_name').strip()
+        return slugify(site_name, allow_unicode=True)
 
 class ReportSiteForm(forms.ModelForm):
     class Meta:
