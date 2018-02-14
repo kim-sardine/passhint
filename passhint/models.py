@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.forms import URLField
+from django.utils.text import slugify
 
 def url_validator(url):
 
@@ -49,6 +50,10 @@ class Site(TimeStampedModel):
     # @classmethod
     # def search_tag(cls, q):
     #     all_sites = cls.objects.all()
+    def save(self, *args, **kwargs):
+        
+        self.name = slugify(self.name, allow_unicode=True)
+        super().save(*args, **kwargs)
         
 
 class Rule(TimeStampedModel):
