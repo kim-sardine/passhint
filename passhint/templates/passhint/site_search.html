@@ -1,0 +1,12 @@
+{% load i18n %}
+hello
+
+{% if sites %}
+    {% for site in sites  %}
+        {{ site.name }}
+        {{ site.get_rule_set_list }}
+        <br />
+    {% endfor %}
+{% else %}
+    {% trans 'No Result.. Please Report It And Get Points' %}
+{% endif %}
