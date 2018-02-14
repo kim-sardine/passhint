@@ -10,6 +10,11 @@ def url_validator(url):
     except ValidationError:
         raise ValidationError('Invalid URL Type')
 
+STATUS_CHOICES = (
+        ('service', 'service'),
+        ('waiting', 'waiting'),
+        ('rejected', 'rejected'),
+    )
 
 class TimeStampedModel(models.Model):
 
@@ -23,8 +28,10 @@ class TimeStampedModel(models.Model):
 class Site(TimeStampedModel):
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL)
-    name = models.CharField(max_length=50, unique=True)
+    name = models.CharField(max_length=60)
     tag = models.CharField(max_length=200)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default="waiting")
+
     hit = models.BigIntegerField(default=0)
     main_url = models.CharField(max_length=100, validators=[url_validator])
 
@@ -38,6 +45,10 @@ class Site(TimeStampedModel):
     @property
     def get_tag_list(self):
         return self.tag.split(',')
+
+    # @classmethod
+    # def search_tag(cls, q):
+    #     all_sites = cls.objects.all()
         
 
 class Rule(TimeStampedModel):
