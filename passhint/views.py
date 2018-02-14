@@ -15,7 +15,7 @@ def site_search(request):
 
     # TODO 검색 방식
     # 약한 검사
-    sites = Site.objects.filter(tag__icontains=q).order_by('name')
+    sites = Site.objects.filter(tag__icontains=q, status='service').order_by('name')
 
     return render(request, 'passhint/site_search.html', {
         'sites' : sites,
@@ -36,7 +36,7 @@ def main(request):
             
             try:
                 # 강력한 검사
-                site = Site.objects.get(name__iexact = site_name)
+                site = Site.objects.get(name__iexact = site_name, status='service')
             except Site.DoesNotExist:
                 response = redirect('passhint:site_search')
                 response['Location'] += '?q='+site_name
@@ -62,7 +62,7 @@ def site_detail(request, site_name):
 def autocomplete(request):
     
     q = request.GET.get('term', '')
-    sites = Site.objects.filter(tag__icontains = q )[:10]
+    sites = Site.objects.filter(tag__icontains = q, status='service')[:10]
     results = []
 
     for site in sites:
