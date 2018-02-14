@@ -2,6 +2,9 @@ from django.db import models
 from django.conf import settings
 from django.forms import URLField
 from django.utils.text import slugify
+from django.forms import ValidationError
+from django.utils import timezone
+import datetime
 
 def url_validator(url):
 
@@ -30,7 +33,7 @@ class Site(TimeStampedModel):
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL)
     name = models.CharField(max_length=60)
-    tag = models.CharField(max_length=200)
+    tag = models.CharField(max_length=200, blank=True, null=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default="waiting")
 
     hit = models.BigIntegerField(default=0)
@@ -47,9 +50,6 @@ class Site(TimeStampedModel):
     def get_tag_list(self):
         return self.tag.split(',')
 
-    # @classmethod
-    # def search_tag(cls, q):
-    #     all_sites = cls.objects.all()
     def save(self, *args, **kwargs):
         
         self.name = slugify(self.name, allow_unicode=True)
@@ -103,3 +103,9 @@ class RuleSet(TimeStampedModel):
 
     def __str__(self):
         return '{}-{}'.format(self.site, self.created_at)
+
+    @staticmethod
+    def get_count_recent_1day(user):
+        date_from = timezone.now() - datetime.timedelta(days=1)
+        recent_count = RuleSet.objects.filter(user=user, created_at__gte=date_from).count()
+        return recent_count

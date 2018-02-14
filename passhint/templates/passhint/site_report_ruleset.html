@@ -1,0 +1,11 @@
+<form method="POST">
+    <table>
+        {% csrf_token %}
+        {{form.as_table}}
+        <input type="submit" value="Submit">
+    </table>
+</form>
+{{ site.name }}
+{{ site.main_url }}
+{{ site.user.username }}
+{{ site.created_at }}
