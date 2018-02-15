@@ -17,8 +17,8 @@ def url_validator(url):
         raise ValidationError('Invalid URL Type')
 
 STATUS_CHOICES = (
-        ('service', 'service'),
         ('waiting', 'waiting'),
+        ('approved', 'approved'),
         ('rejected', 'rejected'),
     )
 
@@ -36,7 +36,6 @@ class Site(TimeStampedModel):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL)
     name = models.CharField(max_length=60)
     tag = models.CharField(max_length=200, blank=True, null=True)
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default="waiting")
 
     hit = models.BigIntegerField(default=0)
     main_url = models.CharField(max_length=100, validators=[url_validator])
@@ -54,35 +53,11 @@ class Site(TimeStampedModel):
 
     @property
     def get_rule_set_list(self):
-        return self.rule_sets.latest('created_at')
+        return self.rule_sets.first()
 
     @property
     def get_tag_list(self):
         return self.tag.split(',')
-
-    @staticmethod
-    def get_lastest_by_name(site_name, include_waiting=False):
-        
-        # service 중인 site가 1순위
-        site = Site.objects.filter(
-                    Q(name = site_name) &
-                    Q(status = 'service'))
-
-        if site:
-            site = site.latest('created_at')
-            return site
-
-        #  waiting status의 Site 까지 필요로 하는 요청이라면
-        if include_waiting:
-            site = Site.objects.filter(
-                        Q(name = site_name) &
-                        Q(status = 'waiting'))
-
-            if site:
-                site = site.latest('created_at')
-                return site
-
-        raise Site.DoesNotExist 
 
 class Rule(TimeStampedModel):
 
@@ -140,3 +115,17 @@ class RuleSet(TimeStampedModel):
         date_from = timezone.now() - datetime.timedelta(days=1)
         recent_count = RuleSet.objects.filter(user=user, created_at__gte=date_from).count()
         return recent_count
+
+
+class ReportSite(TimeStampedModel):
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    name = models.CharField(max_length=60)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default="waiting")
+    main_url = models.CharField(max_length=100, validators=[url_validator])
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ['-created_at']

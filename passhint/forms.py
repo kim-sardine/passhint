@@ -2,7 +2,8 @@ from django import forms
 from django.utils.translation import ugettext_lazy as _
 from django.utils.text import slugify
 
-from .models import Site, RuleSet
+from .models import RuleSet, ReportSite
+
 
 class SiteSearchForm(forms.Form):
     site_name = forms.CharField(
@@ -18,7 +19,7 @@ class SiteSearchForm(forms.Form):
 
 class ReportSiteForm(forms.ModelForm):
     class Meta:
-        model = Site
+        model = ReportSite
         fields = ('name', 'main_url')
         # labels = {
         #     "title": "Service Name"

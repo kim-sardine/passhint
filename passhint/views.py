@@ -20,10 +20,12 @@ def main(request):
     if request.method == 'POST':
     
         form = SiteSearchForm(request.POST)
+
         if form.is_valid():
+
             site_name = form.cleaned_data.get('site_name')
             try:
-                site = Site.get_lastest_by_name(site_name)
+                site = Site.objects.get(name=site_name)
             except Site.DoesNotExist:
                 response = redirect('passhint:site_search')
                 response['Location'] += '?q='+site_name
@@ -44,21 +46,9 @@ def site_search(request):
     q = request.GET.get('q')
 
     # TODO 검색 방식
-    # 현재 : 서비스 중인 site 중 태그 icontain 검색
-    results = Site.objects.filter(
-        Q(tag__icontains = q) &
-        Q(status = 'service')
-        ).values('name').order_by('name').annotate(Count('name'))
-
-    # TODO query 효율
-    # name 별로 돌면서 최신 site 정보를 가져온다
-    sites = []
-    for result in results:
-        name = result.get('name')
-        site = Site.objects.filter(name=name).latest('created_at')
-        sites.append(site)
+    # 현재 : 태그 icontain 검색
+    sites = Site.objects.filter(Q(tag__icontains = q)).prefetch_related('rule_sets').order_by('name')
     
-    print(sites)
     return render(request, 'passhint/site_search.html', {
         'sites' : sites,
     })
@@ -66,14 +56,11 @@ def site_search(request):
 
 def site_detail(request, site_name):
     
-    try:
-        site = Site.get_lastest_by_name(site_name)
-    except Site.DoesNotExist:
-        raise Http404
-    else:
-        return render(request, 'passhint/site_detail.html', {
+    site = get_object_or_404(Site.objects.prefetch_related('rule_sets').select_related('user'), name=site_name)
+
+    return render(request, 'passhint/site_detail.html', {
         'site' : site,
-    })
+        })
     
 # 사이트 등록 요청
 @login_required
@@ -83,9 +70,9 @@ def site_report(request):
         form = ReportSiteForm(request.POST)
 
         if form.is_valid():
-            site = form.save(commit=False)
-            site.user = request.user
-            site.save()
+            report_site = form.save(commit=False)
+            report_site.user = request.user
+            report_site.save()
 
             # TODO Report Success Message : 제보 완료.. 등록까지 시간이 걸려요
             return redirect('passhint:main')
@@ -101,7 +88,7 @@ def site_report(request):
 @login_required
 def site_report_ruleset(request, site_name):
     
-    site = Site.get_lastest_by_name(site_name, ['waiting', 'service',])
+    site = get_object_or_404(Site.objects.prefetch_related('rule_sets'), name=site_name)
 
     # 최대 Report-RuleSet 갯수 : 10개 / 1일
     if RuleSet.get_count_recent_1day(request.user) >= MAXIMUM_REPORT_RULESET_NUMBER:
@@ -134,11 +121,8 @@ def autocomplete(request):
     q = request.GET.get('term', '')
 
     # 서비스 중 인 site 중 검색하여 name으로 group_by 한 후 name 만 사용한다
-    sites = Site.objects.filter(
-        Q(tag__icontains = q) &
-        Q(status = 'service')
-        ).values('name').order_by('name').annotate(Count('name'))
+    sites = Site.objects.filter(Q(tag__icontains = q)).order_by('name')
 
-    results = [site.get('name') for site in sites]
+    results = [site.name for site in sites]
     
     return JsonResponse(results, safe=False)
