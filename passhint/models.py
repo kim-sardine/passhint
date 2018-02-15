@@ -110,6 +110,54 @@ class RuleSet(TimeStampedModel):
     class Meta:
         ordering = ['-created_at']
 
+    @property
+    def get_true_rule_list(self):
+        result = []
+        
+        if self.len_min is not None:
+            result.append('len_min_'+str(self.len_min))
+        
+        if self.len_max is not None:
+            result.append('len_max_'+str(self.len_max))
+        
+        if self.exc_special is True:
+            result.append('exc_special')
+
+        if self.exc_space is True:
+            result.append('exc_space')
+        
+        if self.exc_id is True:
+            result.append('exc_id')
+        
+        if self.exc_same is True:
+            result.append('exc_same')
+        
+        if self.exc_series is True:
+            result.append('exc_series')
+        
+        if self.exc_id is True:
+            result.append('exc_id')
+        
+        if self.exc_common is True:
+            result.append('exc_common')
+        
+        if self.inc_special is True:
+            result.append('inc_special')
+        
+        if self.inc_lower is True:
+            result.append('inc_lower')
+        
+        if self.inc_upper is True:
+            result.append('inc_upper')
+        
+        if self.inc_number is True:
+            result.append('inc_number')
+        
+        if self.inc_letter is True:
+            result.append('inc_letter')
+
+        return result
+        
     @staticmethod
     def get_count_recent_1day(user):
         date_from = timezone.now() - datetime.timedelta(days=1)

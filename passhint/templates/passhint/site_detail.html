@@ -1,11 +1,16 @@
 {% extends "layout.html" %}
 {% load i18n %}
 {% load widget_tweaks %}
+{% load passhint_extras %}
 
 {% block content %}
 {{ site.name }}
 {{ site.main_url }}
 {{ site.user.username }}
 {{ site.created_at }}
-{{ site.get_rule_set_list.len_min }}
+{{ site.get_rule_set_list.get_true_rule_list }}
+<br>
+{% for rule in site.get_rule_set_list.get_true_rule_list %}
+ {{ rule|get_html_rule }}
+{% endfor %}
 {% endblock content %}
