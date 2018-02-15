@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse, Http404
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
-from django.db.models import Q, Count
+from django.db.models import F, Q, Count
 
 import json
 
@@ -57,10 +57,15 @@ def site_search(request):
 def site_detail(request, site_name):
     
     site = get_object_or_404(Site.objects.prefetch_related('rule_sets').select_related('user'), name=site_name)
+    
+    # hit++
+    site.hit = F('hit') + 1
+    site.save()
 
     return render(request, 'passhint/site_detail.html', {
         'site' : site,
         })
+    
     
 # 사이트 등록 요청
 @login_required
