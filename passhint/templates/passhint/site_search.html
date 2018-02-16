@@ -1,17 +1,30 @@
 {% extends "passhint/layout.html" %}
 {% load i18n %}
 {% load widget_tweaks %}
+{% load passhint_extras %}
 
 {% block passhint_content %}
-hello<br />
-
-{% if sites %}
-    {% for site in sites  %}
-        {{ site.name }}
-        {{ site.get_rule_set_list.len_min }}
-        <br />
-    {% endfor %}
+{% if sites %} 
+    {% for site in sites %}
+        <div class="card mb-4">
+            <div class="card-body p-3">
+                <a href="{% url "passhint:site_detail" site.name %}">
+                    <h4 class="card-title">{{ site.name }}</h4>
+                </a>
+                {{ site.get_rule_set_list.get_true_rule_list|get_html_rule }}
+            </div>
+        </div>
+    {% endfor %} 
 {% else %}
-    {% trans 'No Result.. Please Report It And Get Points' %}
+    <div class="jumbotron">
+        <h1 class="display-3">No Result Found</h1>
+        <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content
+            or information.</p>
+        <hr class="my-4">
+        <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+        <p class="lead">
+            <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+        </p>
+    </div>
 {% endif %}
 {% endblock passhint_content %}

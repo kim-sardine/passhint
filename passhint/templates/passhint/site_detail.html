@@ -8,9 +8,8 @@
 {{ site.main_url }}
 {{ site.user.username }}
 {{ site.created_at }}
-{{ site.get_rule_set_list.get_true_rule_list }}
 <br>
 {% for rule in site.get_rule_set_list.get_true_rule_list %}
- {{ rule|get_html_rule }}
+ {{ rule|get_html_rule_each }}
 {% endfor %}
 {% endblock passhint_content %}

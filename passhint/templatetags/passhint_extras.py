@@ -7,8 +7,18 @@ register = template.Library()
 # input : Rule
 # ouput : HTML (button?)
 @register.filter
-def get_html_rule(rule_string):
+def get_html_rule(rule_list):
 
+    result = ''
+    for rule_string in rule_list:
+        html = get_html_rule_each(rule_string)
+        result += html
+    return mark_safe(result)
+
+
+@register.filter
+def get_html_rule_each(rule_string):
+    
     rule_splited = rule_string.split('_')
 
     if rule_splited[0] == 'len':
