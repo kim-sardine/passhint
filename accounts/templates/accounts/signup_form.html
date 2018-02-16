@@ -1,0 +1,51 @@
+{% extends "accounts/layout.html" %}
+{% load widget_tweaks%}
+
+{% block accounts_content %}
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-header text-center">
+                <h4>Enter your additional information to complete signup</h4>
+            </div>
+            <div class="card-body">
+                <form action="" method="post">
+                    {% csrf_token %} 
+                    
+                    {% for error in form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {{ error }}
+                    </div>
+                    {% endfor %}
+                    <!-- hidden fields는 위젯만 렌더링 -->
+                    {% for field in form.hidden_fields %}
+                    {{ field }} 
+                    {% endfor %}
+                    <!-- visible fields는 모든 요소 렌더링 -->
+                    {% for field in form.visible_fields %}
+                    <div class="form-group row">
+                        <label for="{{ field.id_for_label }}" class="col-sm-3 col-form-label">{{ field.label }}</label>
+                        <div class="col-md-9">
+                            {{ field|add_class:'form-control' }}
+                            <p class="help-block">{{ field.help_text }}</p>
+                            {% for error in field.errors %}
+                            <div class="alert alert-danger">
+                                {{ error }}
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <div class="text-right">
+                        <input type="submit" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer text-muted text-center">
+                Email is Optional
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

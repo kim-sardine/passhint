@@ -1,0 +1,29 @@
+{% extends "accounts/layout.html" %}
+{% load socialaccount %}
+
+{% block accounts_content %}
+<div class="row">
+    <div class="col-md-4 offset-md-4">
+        <div class="card">
+            <div class="card-header text-center">
+                <h4>Social Login</h4>
+            </div>
+            <div class="card-body text-center">
+                {% for provider in providers %}
+                    {% if provider.social_app %}
+                    <div class="m-4">
+                        <a href="{% provider_login_url provider.id %}">
+                            <button type="button" class="btn btn-primary btn-lg btn-block">Join with {{ provider.name }}</button>
+                        </a>
+                    </div>
+                    {% else %}
+                    <div class="m-4">
+                        <button type="button" class="btn btn-secondary btn-lg btn-block">{{ provider.name }}(Disabled)</button>
+                    </div>
+                    {% endif %}
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

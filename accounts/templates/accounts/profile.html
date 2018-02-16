@@ -1,0 +1,25 @@
+{% extends "accounts/layout.html" %}
+
+{% block accounts_content %}
+<div class="row">
+    <div class="col-md-8 mb-4">
+        <div>
+            <h2>{{ user }}'s Profile</h2>
+        </div>
+        <hr>
+        <div>
+            <h4>Information</h4>
+            <p>username : {{ user.get_username|default:"No Username" }}</p>
+            <p>email : {{ user.email|default:"No Email" }}</p>
+            <p>point : {{ user.profile.point|default:"0" }}</p>
+            <p>date_joined : {{ user.date_joined|default:"No Data" }}</p>
+        </div> 
+        <hr>
+        <div>
+            {% comment %}
+            {% include "accounts/report_list.html" with report_new_list=report_new_list report_udpate_list=report_udpate_list %}
+            {% endcomment %}
+        </div>
+    </div>
+</div>
+{% endblock %}

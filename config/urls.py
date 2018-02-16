@@ -9,6 +9,8 @@ urlpatterns = [
     path('', main, name='main'),
     path('passhint/', include('passhint.urls')),
 
+    path('accounts/', include('accounts.urls')),
+    path('accounts/', include('allauth.urls')),
     path('admin/', admin.site.urls),
 ]
 

@@ -40,9 +40,18 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'django.contrib.sites',
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.facebook',
+
     'django_extensions',
     'widget_tweaks',
     
+    'accounts',
     'passhint',
 ]
 
@@ -158,7 +167,24 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+################################ ACCOUNTS ################################
 
 LOGIN_URL = '/accounts/login/'
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+# 디폴트 SITE의 id
+# 등록하지 않으면, 각 요청 시에 host명의 Site 인스턴스를 찾습니다.
+SITE_ID = 1
+# 이메일 확인을 하지 않음.
+SOCIALACCOUNT_EMAIL_VERIFICATION = 'none'
+
+ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = False
+SOCIALACCOUNT_ADAPTER = 'accounts.adapter.SocialAccountAdapter'
+ACCOUNT_SIGNUP_FORM_CLASS = 'accounts.forms.t_SignupForm'
+SOCIALACCOUNT_AUTO_SIGNUP = False
+
 LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = None
+LOGOUT_REDIRECT_URL = '/'
