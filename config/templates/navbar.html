@@ -1,7 +1,9 @@
 <header>
     <nav class="navbar navbar-expand-lg navbar-light bg-light rounded">
         <div class="container">
-            <a class="navbar-brand" href="{% url "passhint:main" %}">passhint</a>
+            {% if nav_main != 'active' %}
+                <a class="navbar-brand" href="{% url "main" %}">passhint</a>
+            {% endif %}
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#my_navbar" aria-controls="my_navbar" aria-expanded="false"
                 aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -18,14 +20,16 @@
                     <li class="nav-item">
                         <a class="nav-link disabled" href="#">Password</a>
                     </li>
-                    <li class="nav-item">
-                        <form action="{% url "passhint:main" %}" class="form-inline my-2 my-lg-0 ml-lg-2" method="post">
-                            {% csrf_token %}
-                            <input type="text" name="site_name" class="form-control" id="search_name" placeholder="Search" aria-label="Search" maxlength="30"
-                                required>
-                            <button type="submit" class="my-button"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-1"><circle cx="10.5" cy="10.5" r="7.5"></circle><line x1="21" y1="21" x2="15.8" y2="15.8"></line></svg></button>
-                        </form>
-                    </li>
+                    {% if nav_main != 'active' %}
+                        <li class="nav-item">
+                            <form action="{% url "main" %}" class="form-inline my-2 my-lg-0 ml-lg-2" method="post">
+                                {% csrf_token %}
+                                <input type="text" name="site_name" class="form-control" id="search_name" placeholder="Search" aria-label="Search" maxlength="30"
+                                    required>
+                                <button type="submit" class="my-button"><i class="material-icons" style="line-height: unset;">search</i></button>
+                            </form>
+                        </li>
+                    {% endif %}
                 </ul>
                 <ul class="navbar-nav">
                     <!--

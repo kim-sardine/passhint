@@ -38,6 +38,7 @@ def main(request):
 
     return render(request, 'passhint/main.html', {
         'form' : form,
+        'nav_main' : 'active',
     })
 
 
@@ -86,7 +87,7 @@ def site_report(request):
             report_site.save()
 
             # TODO Report Success Message : 제보 완료.. 등록까지 시간이 걸려요
-            return redirect('passhint:main')
+            return redirect('main')
     else:    
         form = ReportSiteForm()
 

@@ -3,11 +3,13 @@ from django.shortcuts import redirect
 from django.contrib import admin
 from django.urls import path, re_path, include
 from django.views.static import serve
+from passhint.views import main
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-
+    path('', main, name='main'),
     path('passhint/', include('passhint.urls')),
+
+    path('admin/', admin.site.urls),
 ]
 
 
