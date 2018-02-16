@@ -59,6 +59,23 @@ class Site(TimeStampedModel):
     def get_tag_list(self):
         return self.tag.split(',')
 
+    # 태그가 완전 일치하는 사이트가 하나 존재하면 site 리턴
+    # 존재하지 않거나 복수 존재하면 None 리턴
+    @staticmethod
+    def get_site_by_tag(keyword):
+        sites = Site.objects.all()
+        
+        result = []
+        for site in sites:
+            tag_list = site.get_tag_list
+            if keyword in tag_list:
+                result.append(site)
+
+        if len(result) == 1:
+            return result[0]
+        else:
+            return None
+
 class Rule(TimeStampedModel):
 
     LEVEL_CHOICES = (

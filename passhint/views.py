@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse, JsonResponse, Http404
+from django.http import HttpResponse, JsonResponse, Http404, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.db.models import F, Q, Count
+from django.urls import reverse
 
 import json
 
@@ -23,15 +24,19 @@ def main(request):
 
         if form.is_valid():
 
-            site_name = form.cleaned_data.get('site_name')
+            keyword = form.cleaned_data.get('keyword')
             try:
-                site = Site.objects.get(name=site_name)
-            except Site.DoesNotExist:
-                response = redirect('passhint:site_search')
-                response['Location'] += '?q='+site_name
-                return response
+                site = Site.objects.get(name=keyword)
+            except Site.DoesNotExist: 
+                # name 으로 일치되는 것이 없으면 태그에서 완전일치 하는 것이 있는지 검사
+                found_site = Site.get_site_by_tag(keyword)
+                
+                if found_site is None: # 태그로 완전일치가 없거나 다수 존재하면 search 로 이동
+                    return HttpResponseRedirect(reverse('passhint:site_search') + '?q='+keyword)
+                else: # 완전 일치하는 것이 딱 하나 존재하면 detail 로 이동
+                    return redirect('passhint:site_detail', site_name=found_site.name)
             else:
-                return redirect('passhint:site_detail', site_name=site_name)
+                return redirect('passhint:site_detail', site_name=keyword)
 
     else:    
         form = SiteSearchForm()

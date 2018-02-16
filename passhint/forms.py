@@ -6,16 +6,16 @@ from .models import RuleSet, ReportSite
 
 
 class SiteSearchForm(forms.Form):
-    site_name = forms.CharField(
+    keyword = forms.CharField(
         max_length=30, 
         widget=forms.TextInput(
-            attrs={'placeholder':'서비스 이름을 입력하세요', 'id':'search_name'}
+            attrs={'id':'search_name'}
             )
         )
 
-    def clean_site_name(self):
-        site_name = self.cleaned_data.get('site_name').strip()
-        return slugify(site_name, allow_unicode=True)
+    def clean_keyword(self):
+        keyword = self.cleaned_data.get('keyword').strip()
+        return slugify(keyword, allow_unicode=True)
 
 class ReportSiteForm(forms.ModelForm):
     class Meta:
