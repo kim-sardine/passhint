@@ -17,27 +17,24 @@
             </form>
         </div>
 
-        <div class="card-deck my-5 text-center">
+        <div class="card-deck my-5">
             <div class="card mb-4 box-shadow">
-                <div class="card-header">
+                <div class="card-header text-center">
                     <h4 class="my-0 font-weight-normal">{% trans "All-time ranking" %}</h4>
                 </div>
                 <div class="card-body">
-                    <h1 class="card-title pricing-card-title">$0
-                        <small class="text-muted">/ mo</small>
-                    </h1>
-                    <ul class="list-unstyled mt-3 mb-4">
-                        <li>10 users included</li>
-                        <li>2 GB of storage</li>
-                        <li>Email support</li>
-                        <li>Help center access</li>
+                    <ul class="list-group list-group-flush">
+                        {% for site in all_time_ranking %}
+                            <li class="list-group-item text-truncate">
+                                 {{ forloop.counter }}. <a class="text-info" href="{% url "passhint:site_detail" site.name %}">{{site.name}}</a>
+                            </li>
+                        {% endfor %}
                     </ul>
-                    <button type="button" class="btn btn-lg btn-block btn-outline-primary">Sign up for free</button>
                 </div>
             </div>
             <div class="card mb-4 box-shadow">
                 <div class="card-header">
-                    <h4 class="my-0 font-weight-normal">{% trans "Today ranking" %}</h4>
+                    <h4 class="my-0 font-weight-normal">{% trans "This weak ranking" %}</h4>
                 </div>
                 <div class="card-body">
                     <h1 class="card-title pricing-card-title">$15
@@ -49,7 +46,6 @@
                         <li>Priority email support</li>
                         <li>Help center access</li>
                     </ul>
-                    <button type="button" class="btn btn-lg btn-block btn-primary">Get started</button>
                 </div>
             </div>
             <div class="card mb-4 box-shadow">
@@ -66,7 +62,6 @@
                         <li>Phone and email support</li>
                         <li>Help center access</li>
                     </ul>
-                    <button type="button" class="btn btn-lg btn-block btn-primary">Contact us</button>
                 </div>
             </div>
         </div>

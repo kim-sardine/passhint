@@ -41,9 +41,23 @@ def main(request):
     else:    
         form = SiteSearchForm()
 
+    # hit 기준 정렬
+    all_time_ranking = Site.objects.all().order_by('-hit')[:7]
+
+    # log 모델 필요
+    # this_weak_ranking
+    # today_ranking
+    
+    # created at 기준 정렬
+    # new_site_list
+    
+    # log created at 기준 정렬
+    # recent_search_list
+
     return render(request, 'passhint/main.html', {
         'form' : form,
         'nav_main' : 'active',
+        'all_time_ranking' : all_time_ranking,
     })
 
 
