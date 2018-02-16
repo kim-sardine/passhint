@@ -1,0 +1,45 @@
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light rounded">
+        <div class="container">
+            <a class="navbar-brand" href="{% url "passhint:main" %}">passhint</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#my_navbar" aria-controls="my_navbar" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="my_navbar">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item {{ nav_site_search }}">
+                        <a class="nav-link" href="{% url "passhint:site_search" %}">Site</a>
+                    </li>
+                    <li class="nav-item {{ nav_site_report }}">
+                        <a class="nav-link" href="{% url "passhint:site_report" %}">Report</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#">Password</a>
+                    </li>
+                    <li class="nav-item">
+                        <form action="{% url "passhint:main" %}" class="form-inline my-2 my-lg-0 ml-lg-2" method="post">
+                            {% csrf_token %}
+                            <input type="text" name="site_name" class="form-control" id="search_name" placeholder="Search" aria-label="Search" maxlength="30"
+                                required>
+                            <button type="submit" class="my-button"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-1"><circle cx="10.5" cy="10.5" r="7.5"></circle><line x1="21" y1="21" x2="15.8" y2="15.8"></line></svg></button>
+                        </form>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <!--
+                            TODO 로그인 안 한 상태에서는 로그인 버튼 보여주기
+                        -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="my_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">IMG</a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="my_dropdown">
+                            <a class="dropdown-item" href="#">Profile</a>
+                            <a class="dropdown-item" href="#">Logout</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>

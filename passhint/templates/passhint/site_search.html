@@ -1,8 +1,8 @@
-{% extends "layout.html" %}
+{% extends "passhint/layout.html" %}
 {% load i18n %}
 {% load widget_tweaks %}
 
-{% block content %}
+{% block passhint_content %}
 hello<br />
 
 {% if sites %}
@@ -14,4 +14,4 @@ hello<br />
 {% else %}
     {% trans 'No Result.. Please Report It And Get Points' %}
 {% endif %}
-{% endblock content %}
+{% endblock passhint_content %}

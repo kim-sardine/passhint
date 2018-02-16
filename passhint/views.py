@@ -44,13 +44,19 @@ def main(request):
 def site_search(request):
         
     q = request.GET.get('q')
+    ordey_by = request.GET.get('ordey_by', 'name')
 
-    # TODO 검색 방식
-    # 현재 : 태그 icontain 검색
-    sites = Site.objects.filter(Q(tag__icontains = q)).prefetch_related('rule_sets').order_by('name')
+    if q:
+        # TODO 검색 방식
+        # 현재 : 태그 icontain 검색
+        sites = Site.objects.filter(Q(tag__icontains = q)).prefetch_related('rule_sets').order_by(ordey_by)
+    else:
+        sites = Site.objects.all().prefetch_related('rule_sets').order_by(ordey_by)
+
     
     return render(request, 'passhint/site_search.html', {
         'sites' : sites,
+        'nav_site_search' : 'active',
     })
 
 
@@ -86,6 +92,7 @@ def site_report(request):
 
     return render(request, 'passhint/site_report.html', {
         'form' : form,
+        'nav_site_report' : 'active',
     })
 
 # TODO passhint 확인 가이드가 필요할 듯

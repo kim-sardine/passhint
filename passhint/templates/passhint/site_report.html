@@ -1,7 +1,13 @@
+{% extends "passhint/layout.html" %}
+{% load i18n %}
+{% load widget_tweaks %}
+{% load passhint_extras %}
+
+{% block passhint_content %}
 <form method="POST">
     <table>
-        {% csrf_token %}
-        {{form.as_table}}
+        {% csrf_token %} {{form.as_table}}
         <input type="submit" value="Submit">
     </table>
 </form>
+{% endblock passhint_content %}
