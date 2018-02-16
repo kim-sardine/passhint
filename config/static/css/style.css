@@ -17,6 +17,10 @@ html {
     outline: none;
 }
 
+.active {
+    font-weight: 630;
+}
+
 .container {
     max-width: 960px;
 }
