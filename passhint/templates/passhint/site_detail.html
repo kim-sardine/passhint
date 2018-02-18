@@ -4,12 +4,45 @@
 {% load passhint_extras %}
 {% block title %}{{ site.name }} | passhint{% endblock title %}
 {% block passhint_content %}
-{{ site.name }}
-{{ site.main_url }}
-{{ site.user.username }}
-{{ site.created_at }}
+<div class="row">
+    <div class="col-lg-8">
+        <!-- passhint info -->
+        {{ site.name }}
+        {{ site.main_url }}
+        {{ site.created_at }}
+        
+        {% for rule in site.get_rule_set_list.get_true_rule_list %}
+         {{ rule|get_html_rule_each }}
+        {% endfor %}
+    </div>
+    <div class="col-lg-4">
+        <!-- user info -->
+        <h4 class="mb-3">
+            User info
+        </h4>
+        <ul class="list-group mb-3">
+            <li class="list-group-item">
+                <div>
+                    <h6 class="my-0">Site Reporter</h6>
+                    <strong class="text-muted">{{ site.user.username }}</strong>
+                    <span class="text-muted"> at {{ site.created_at }}</span>
+                </div>
+            </li>
+            <li class="list-group-item">
+                <div>
+                    <h6 class="my-0">Passhint Reporter</h6>
+                    <strong class="text-muted">{{ site.get_rule_set_list.user.username }}</strong>
+                    <span class="text-muted"> at {{ site.get_rule_set_list.created_at }}</span>
+                </div>
+            </li>
+            <li class="list-group-item">
+                <div>
+                    <h6 class="my-0">Third item</h6>
+                    <span class="text-muted">Brief description</span>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
 <br>
-{% for rule in site.get_rule_set_list.get_true_rule_list %}
- {{ rule|get_html_rule_each }}
-{% endfor %}
 {% endblock passhint_content %}
