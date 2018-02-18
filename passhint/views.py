@@ -55,7 +55,7 @@ def main(request):
     all_time_ranking = Site.objects.all().order_by('-hit')[:7]
 
     # log 모델 필요
-    # this_weak_ranking
+    this_weak_ranking = LogSite.get_sorted_site_recent_nday(7)[:7]
     # today_ranking
     
     # created at 기준 정렬
@@ -68,6 +68,7 @@ def main(request):
         'form' : form,
         'nav_main' : 'active',
         'all_time_ranking' : all_time_ranking,
+        'this_weak_ranking' : this_weak_ranking,
         'new_site_list' : new_site_list,
     })
 

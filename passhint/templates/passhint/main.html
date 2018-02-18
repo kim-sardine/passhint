@@ -38,10 +38,10 @@
                 </div>
                 <div class="card-body">
                     <ul class="list-group list-group-flush">
-                        {% for site in all_time_ranking %}
+                        {% for site_name in this_weak_ranking %}
                         <li class="list-group-item text-truncate">
                             {{ forloop.counter }}.
-                            <a class="text-info" href="{% url "passhint:site_detail" site.name %}">{{site.name}}</a>
+                            <a class="text-info" href="{% url "passhint:site_detail" site_name %}">{{site_name}}</a>
                         </li>
                         {% endfor %}
                     </ul>

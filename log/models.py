@@ -1,12 +1,10 @@
 from django.db import models
 from django.conf import settings
 from passhint.models import Site
+from django.db.models import Count
+from django.utils import timezone
 
-STATUS_CHOICES = (
-        ('waiting', 'waiting'),
-        ('approved', 'approved'),
-        ('rejected', 'rejected'),
-    )
+import datetime
 
 class LogSite(models.Model):
 
@@ -26,6 +24,20 @@ class LogSite(models.Model):
         if user:
             log.user = user
         log.save()
+
+    @classmethod
+    def get_sorted_site_recent_nday(cls, day):
+        date_from = timezone.now() - datetime.timedelta(days=day)
+        logs = cls.objects.filter(created_at__gte=date_from)
+        my_dict = {}
+        for log in logs:
+            if my_dict.get(log.site.name):
+                my_dict[log.site.name] += 1
+            else:
+                my_dict[log.site.name] = 1
+                
+        site_name_sorted = sorted(my_dict, key=my_dict.get, reverse=True)
+        return site_name_sorted
 
 class LogSearch(models.Model):
 
