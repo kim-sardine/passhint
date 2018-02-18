@@ -61,9 +61,9 @@ class Site(TimeStampedModel):
 
     # 태그가 완전 일치하는 사이트가 하나 존재하면 site 리턴
     # 존재하지 않거나 복수 존재하면 None 리턴
-    @staticmethod
-    def get_site_by_tag(keyword):
-        sites = Site.objects.all()
+    @classmethod
+    def get_site_by_tag(cls, keyword):
+        sites = cls.objects.all()
         
         result = []
         for site in sites:
@@ -175,10 +175,10 @@ class RuleSet(TimeStampedModel):
 
         return result
         
-    @staticmethod
-    def get_count_recent_1day(user):
+    @classmethod
+    def get_count_recent_1day(cls, user):
         date_from = timezone.now() - datetime.timedelta(days=1)
-        recent_count = RuleSet.objects.filter(user=user, created_at__gte=date_from).count()
+        recent_count = cls.objects.filter(user=user, created_at__gte=date_from).count()
         return recent_count
 
 

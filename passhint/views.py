@@ -9,8 +9,12 @@ import json
 
 from .models import Site, Rule, RuleSet
 from .forms import SiteSearchForm, ReportSiteForm, ReportRuleSetForm
+from log.models import LogSearch, LogSite
 
 MAXIMUM_REPORT_RULESET_NUMBER = 10
+
+def get_user_or_none(user):
+    return None if not user.is_authenticated else user
 
 # 메인 페이지
 # 서비스 이름으로 passhint 를 검색하고
@@ -24,6 +28,8 @@ def main(request):
 
         if form.is_valid():
 
+            user = get_user_or_none(request.user)
+
             keyword = form.cleaned_data.get('keyword')
             try:
                 site = Site.objects.get(name=keyword)
@@ -34,8 +40,12 @@ def main(request):
                 if found_site is None: # 태그로 완전일치가 없거나 다수 존재하면 search 로 이동
                     return HttpResponseRedirect(reverse('passhint:site_search') + '?q='+keyword)
                 else: # 완전 일치하는 것이 딱 하나 존재하면 detail 로 이동
+                    # 로그 저장
+                    LogSearch.save_log_search(user, keyword, found_site)
                     return redirect('passhint:site_detail', site_name=found_site.name)
             else:
+                # 로그 저장
+                LogSearch.save_log_search(user, keyword, site)
                 return redirect('passhint:site_detail', site_name=keyword)
 
     else:    
@@ -49,7 +59,7 @@ def main(request):
     # today_ranking
     
     # created at 기준 정렬
-    # new_site_list
+    new_site_list = Site.objects.all().order_by('name')[:7]
     
     # log created at 기준 정렬
     # recent_search_list
@@ -58,23 +68,29 @@ def main(request):
         'form' : form,
         'nav_main' : 'active',
         'all_time_ranking' : all_time_ranking,
+        'new_site_list' : new_site_list,
     })
 
 
 def site_search(request):
         
-    q = request.GET.get('q')
+    keyword = request.GET.get('q')
     ordey_by = request.GET.get('ordey_by', 'name')
 
-    if q:
+    if keyword:
         # TODO 검색 방식
         # 현재 : 태그 icontain 검색
-        sites = Site.objects.filter(Q(tag__icontains = q)).prefetch_related('rule_sets').order_by(ordey_by)
+        sites = Site.objects.filter(Q(tag__icontains = keyword)).prefetch_related('rule_sets').order_by(ordey_by)
+
+        # 로그 저장
+        user = get_user_or_none(request.user)
+        LogSearch.save_log_search(user, keyword, sites)
     else:
         sites = Site.objects.all().prefetch_related('rule_sets').order_by(ordey_by)
 
     
     return render(request, 'passhint/site_search.html', {
+        'keyword' : keyword,
         'sites' : sites,
         'nav_site_search' : 'active',
     })
@@ -87,6 +103,11 @@ def site_detail(request, site_name):
     # hit++
     site.hit = F('hit') + 1
     site.save()
+
+    user = get_user_or_none(request.user)
+
+    # 로그 저장
+    LogSite.save_log_site(site, user)
 
     return render(request, 'passhint/site_detail.html', {
         'site' : site,

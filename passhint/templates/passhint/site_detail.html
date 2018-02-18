@@ -2,7 +2,7 @@
 {% load i18n %}
 {% load widget_tweaks %}
 {% load passhint_extras %}
-
+{% block title %}{{ site.name }} | passhint{% endblock title %}
 {% block passhint_content %}
 {{ site.name }}
 {{ site.main_url }}

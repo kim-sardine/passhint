@@ -2,7 +2,7 @@
 {% load i18n %}
 {% load widget_tweaks %}
 {% load passhint_extras %}
-
+{% block title %}{{keyword}} | Search | passhint{% endblock title %}
 {% block passhint_content %}
 {% if sites %} 
     {% for site in sites %}
