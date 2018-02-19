@@ -46,6 +46,10 @@ html {
     height: 16px;
 }
 
+.site-name {
+    font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+}
+
 /* loading - the AJAX indicator */
 .ui-autocomplete-loading {
     background: white url('/static/img/loading_16.gif') right center no-repeat;

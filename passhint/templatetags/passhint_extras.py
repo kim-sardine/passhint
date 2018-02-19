@@ -43,3 +43,22 @@ def get_html_rule_each(rule_string):
     html = '<button type="button" class="btn btn-'+ level +' btn-sm m-1" title="'+ desc_short +'">'+ desc_en +'</button>'
 
     return mark_safe(html)
+
+@register.filter
+def get_anchor_tag(url):
+
+    if url:
+        # http, https 가 없으면 a tag 가 정상동작하지 않으므로 넣어준다
+        if 'http://' not in url and 'https://' not in url:
+            url = 'http://'+url
+
+        # 사용자에게 보여주기 위한 url 생성 (보기 좋게)
+        url_shown = url.replace('http://', '')
+        url_shown = url_shown.replace('https://', '')
+        if url_shown[-1] == '/':
+            url_shown = url_shown[:-1]
+
+        t_url = '<a target="_blank" href="' + url + '">' + url_shown + '</a>'
+        return mark_safe(t_url)
+    else:
+        return 'no link yet'

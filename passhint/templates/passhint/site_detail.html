@@ -7,38 +7,67 @@
 <div class="row">
     <div class="col-lg-8">
         <!-- passhint info -->
-        {{ site.name }}
-        {{ site.main_url }}
-        {{ site.created_at }}
+        <h1 class="display-4 site-name">
+            {{ site.name }}
+        </h1>
+        <p>
+            {{ site.main_url|get_anchor_tag }}
+        </p>
         
         {% for rule in site.get_rule_set_list.get_true_rule_list %}
          {{ rule|get_html_rule_each }}
         {% endfor %}
     </div>
-    <div class="col-lg-4">
+    <div class="col-lg-4 pt-4 pt-lg-0">
         <!-- user info -->
         <h4 class="mb-3">
-            User info
+             {% trans "Information" %}
         </h4>
         <ul class="list-group mb-3">
             <li class="list-group-item">
                 <div>
-                    <h6 class="my-0">Site Reporter</h6>
-                    <strong class="text-muted">{{ site.user.username }}</strong>
-                    <span class="text-muted"> at {{ site.created_at }}</span>
+                    <h5 class="my-0">{% trans "Site Reporter" %}</h5>
+                    <strong>{{ site.user.username }}</strong>
+                    <span> at {{ site.created_at }}</span>
                 </div>
             </li>
             <li class="list-group-item">
                 <div>
-                    <h6 class="my-0">Passhint Reporter</h6>
-                    <strong class="text-muted">{{ site.get_rule_set_list.user.username }}</strong>
-                    <span class="text-muted"> at {{ site.get_rule_set_list.created_at }}</span>
+                    <h5 class="my-0">{% trans "Passhint Reporter" %}</h5>
+                    {% if site.get_rule_set_list %}
+                        <strong>{{ site.get_rule_set_list.user.username }}</strong>
+                        <span> at {{ site.get_rule_set_list.created_at }}</span>
+                    {% else %}
+                        <strong>{% trans "Be the first passhinter!" %}</strong>
+                    {% endif %}
                 </div>
             </li>
             <li class="list-group-item">
                 <div>
-                    <h6 class="my-0">Third item</h6>
-                    <span class="text-muted">Brief description</span>
+                    <h5 class="my-0">{% trans "Hit" %}</h5>
+                    <span>{{ site.hit }}</span>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="offset-lg-8 col-lg-4 pt-4 pt-lg-0">
+        <!-- user info -->
+        <h4 class="mb-3">
+            {% if site.get_rule_set_list %}
+                {% trans "Update passhint" %}
+            {% else %}
+                {% trans "Report passhint" %}
+            {% endif %}
+        </h4>
+        <ul class="list-group mb-3">
+            <li class="list-group-item">
+                <div>
+                    {% if site.get_rule_set_list %}
+                        <h6 class="my-0">{% trans "Update passhint and get points!" %}</h6>
+                    {% else %}
+                        {% trans "Be the first passhinter and get points!" %}
+                    {% endif %}
+                    <a class="btn btn-info btn-block mt-4" href="{% url "passhint:site_report_ruleset" site.name %}">{% trans "Report" %}</a>
                 </div>
             </li>
         </ul>

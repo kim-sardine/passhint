@@ -87,6 +87,7 @@ def site_search(request):
         user = get_user_or_none(request.user)
         LogSearch.save_log_search(user, keyword, sites)
     else:
+        keyword = 'All site'
         sites = Site.objects.all().prefetch_related('rule_sets').order_by(ordey_by)
 
     
@@ -104,6 +105,7 @@ def site_detail(request, site_name):
     # hit++
     site.hit = F('hit') + 1
     site.save()
+    site.refresh_from_db()
 
     user = get_user_or_none(request.user)
 
