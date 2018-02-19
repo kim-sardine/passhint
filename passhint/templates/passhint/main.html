@@ -105,7 +105,7 @@
 
         
 
-        <hr class="featurette-divider">
+        <hr class="my-5">
         <div class="row featurette">
             <div class="col-md-7">
                 <h2 class="featurette-heading">First featurette heading.
@@ -121,7 +121,7 @@
             </div>
         </div>
 
-        <hr class="featurette-divider">
+        <hr class="my-5">
         <div class="row featurette">
             <div class="col-md-7">
                 <h2 class="featurette-heading">First featurette heading.
@@ -139,4 +139,9 @@
         
         {% include "footer.html" %}
     </div>
+    <script>
+        window.onload = function () {
+            var input = document.getElementById("search_name").focus();
+        }
+    </script>
 {% endblock content %}
