@@ -10,6 +10,8 @@ import json
 from .models import Site, Rule, RuleSet
 from .forms import SiteSearchForm, ReportSiteForm, ReportRuleSetForm
 from log.models import LogSearch, LogSite
+from accounts.models import Profile
+
 
 MAXIMUM_REPORT_RULESET_NUMBER = 10
 
@@ -64,12 +66,16 @@ def main(request):
     # log created at 기준 정렬
     # recent_search_list
 
+    # hit 기준 정렬
+    best_passhinter = Profile.objects.all().order_by('-point')[:7]
+
     return render(request, 'passhint/main.html', {
         'form' : form,
         'nav_main' : 'active',
         'all_time_ranking' : all_time_ranking,
         'this_weak_ranking' : this_weak_ranking,
         'new_site_list' : new_site_list,
+        'best_passhinter' : best_passhinter,
     })
 
 

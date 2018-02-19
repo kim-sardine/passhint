@@ -62,6 +62,21 @@
                     </ul>
                 </div>
             </div>
+            <div class="card mb-4 box-shadow">
+                <div class="card-header text-center">
+                    <h4 class="my-0 font-weight-normal">{% trans "Best passhinter" %}</h4>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        {% for passhinter in best_passhinter %}
+                        <li class="list-group-item text-truncate">
+                            {{ forloop.counter }}.
+                            <a class="text-info" href="">{{passhinter.user.username}}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
         </div>
         
         <div id="my_carousel" class="carousel slide py-5" data-ride="carousel">

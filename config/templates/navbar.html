@@ -38,7 +38,7 @@
                                 <i class="material-icons" style="vertical-align: top;">person</i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="my_dropdown">
-                                <a class="dropdown-item" href="{% url "accounts:profile" %}">Profile</a>
+                                <a class="dropdown-item" href="{% url "profile" user.username %}">Profile</a>
                                 <a class="dropdown-item" href="{% url "accounts:logout" %}">Logout</a>
                             </div>
                         </li>

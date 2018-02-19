@@ -2,25 +2,29 @@
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import login as auth_login
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from allauth.socialaccount.models import SocialApp
 from allauth.socialaccount.views import SignupView
 from allauth.socialaccount.templatetags.socialaccount import get_providers
 from .forms import SignupForm, LoginForm, t_SignupForm
-
+from django.contrib.auth import get_user_model
 
 class MySignupView(SignupView):
     template_name = ('accounts/signup_form.html')
 
+
+# TODO 본인일 떄 체크해서 정보 수정 메뉴 보여주기
 @login_required
-def profile(request):
-    current_user = request.user
+def profile(request, username):
+
+    user = get_object_or_404(get_user_model(), username=username)
+
     # report_new_list = ReportNew.objects.filter(user=current_user)
     # report_update_list = ReportUpdate.objects.filter(user=current_user)
             # 'report_new_list' : report_new_list,
             # 'report_update_list' : report_update_list
     return render(request, 'accounts/profile.html', {
-            'user' : current_user,
+            'user' : user,
         })
 
 
