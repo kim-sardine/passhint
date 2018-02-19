@@ -7,12 +7,10 @@ from allauth.socialaccount.models import SocialApp
 from allauth.socialaccount.views import SignupView
 from allauth.socialaccount.templatetags.socialaccount import get_providers
 from .forms import SignupForm, LoginForm, t_SignupForm
-# from passhint.models import ReportNew, ReportUpdate
+
 
 class MySignupView(SignupView):
     template_name = ('accounts/signup_form.html')
-
-signup = MySignupView.as_view()
 
 @login_required
 def profile(request):
