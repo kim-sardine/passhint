@@ -14,9 +14,7 @@
             {{ site.main_url|get_anchor_tag }}
         </p>
         
-        {% for rule in site.get_rule_set_list.get_true_rule_list %}
-         {{ rule|get_html_rule_each }}
-        {% endfor %}
+        {{ site.get_rule_set_list.get_true_rule_list|get_html_rule }}
     </div>
     <div class="col-lg-4 pt-4 pt-lg-0">
         <!-- user info -->

@@ -20,6 +20,7 @@ STATUS_CHOICES = (
         ('waiting', 'waiting'),
         ('approved', 'approved'),
         ('rejected', 'rejected'),
+        ('late', 'late'),
     )
 
 class TimeStampedModel(models.Model):
@@ -99,10 +100,7 @@ class Rule(TimeStampedModel):
         return '{}-{}'.format(self.name, self.desc_short)
 
 
-class RuleSet(TimeStampedModel):
-
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL)
-    site = models.ForeignKey(Site, on_delete=models.CASCADE, related_name='rule_sets')
+class BaseRuleSet(models.Model):
 
     len_min = models.SmallIntegerField(blank=True, null=True)
     len_max = models.SmallIntegerField(blank=True, null=True)
@@ -121,6 +119,15 @@ class RuleSet(TimeStampedModel):
     inc_number = models.BooleanField(default=False)
     inc_letter = models.BooleanField(default=False)
 
+    class Meta:
+        abstract = True
+
+
+class RuleSet(TimeStampedModel, BaseRuleSet):
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL)
+    site = models.ForeignKey(Site, on_delete=models.CASCADE, related_name='rule_sets')
+
     def __str__(self):
         return '{}-{}'.format(self.site, self.created_at)
 
@@ -129,6 +136,7 @@ class RuleSet(TimeStampedModel):
 
     @property
     def get_true_rule_list(self):
+        
         result = []
         
         if self.len_min is not None:
@@ -152,9 +160,6 @@ class RuleSet(TimeStampedModel):
         if self.exc_series is True:
             result.append('exc_series')
         
-        if self.exc_id is True:
-            result.append('exc_id')
-        
         if self.exc_common is True:
             result.append('exc_common')
         
@@ -174,7 +179,20 @@ class RuleSet(TimeStampedModel):
             result.append('inc_letter')
 
         return result
-        
+
+
+class ReportRuleSet(TimeStampedModel, BaseRuleSet):
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL)
+    site = models.ForeignKey(Site, on_delete=models.CASCADE, related_name='report_rule_sets')
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default="waiting")
+
+    def __str__(self):
+        return '{}-{}'.format(self.site, self.created_at)
+
+    class Meta:
+        ordering = ['-created_at']
+
     @classmethod
     def get_count_recent_1day(cls, user):
         date_from = timezone.now() - datetime.timedelta(days=1)

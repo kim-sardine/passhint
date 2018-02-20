@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Site, Rule, RuleSet, ReportSite
+from .models import Site, Rule, RuleSet, ReportSite, ReportRuleSet
 
 @admin.register(Site)
 class SiteAdmin(admin.ModelAdmin):
@@ -16,3 +16,7 @@ class RuleSetAdmin(admin.ModelAdmin):
 @admin.register(ReportSite)
 class ReportSiteAdmin(admin.ModelAdmin):
     list_display = ('name', 'main_url', 'user', 'status', 'created_at')
+
+@admin.register(ReportRuleSet)
+class ReportRuleSetAdmin(admin.ModelAdmin):
+    list_display = ('site', 'user', 'status', 'created_at')

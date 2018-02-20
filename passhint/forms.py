@@ -2,7 +2,7 @@ from django import forms
 from django.utils.translation import ugettext_lazy as _
 from django.utils.text import slugify
 
-from .models import Site, RuleSet, ReportSite
+from .models import Site, RuleSet, ReportSite, ReportRuleSet
 
 class SiteSearchForm(forms.Form):
     keyword = forms.CharField(
@@ -46,7 +46,7 @@ class ReportSiteForm(forms.ModelForm):
 
 class ReportRuleSetForm(forms.ModelForm):
     class Meta:
-        model = RuleSet
+        model = ReportRuleSet
         fields = ('len_min', 'len_max',
                     'exc_special','exc_space','exc_id','exc_same','exc_series','exc_id','exc_common',
                     'inc_special','inc_lower','inc_upper','inc_number','inc_letter')

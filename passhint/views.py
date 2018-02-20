@@ -7,7 +7,7 @@ from django.urls import reverse
 
 import json
 
-from .models import Site, Rule, RuleSet
+from .models import Site, Rule, RuleSet, ReportRuleSet
 from .forms import SiteSearchForm, ReportSiteForm, ReportRuleSetForm
 from log.models import LogSearch, LogSite
 from accounts.models import Profile
@@ -153,7 +153,7 @@ def site_report_ruleset(request, site_name):
     site = get_object_or_404(Site.objects.prefetch_related('rule_sets'), name=site_name)
 
     # 최대 Report-RuleSet 갯수 : 10개 / 1일
-    if RuleSet.get_count_recent_1day(request.user) >= MAXIMUM_REPORT_RULESET_NUMBER:
+    if ReportRuleSet.get_count_recent_1day(request.user) >= MAXIMUM_REPORT_RULESET_NUMBER:
         # TODO 한도 초과 Message : 하루 최대 10개까지 제보 가능합니다
         return redirect('passhint:site_detail', site_name=site_name)
                 
