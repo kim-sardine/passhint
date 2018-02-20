@@ -2,7 +2,55 @@ from django.contrib import admin
 from django.db.models import F
 
 from .models import Site, Rule, RuleSet, ReportSite, ReportRuleSet
-from .common import RULE_LIST, POINT_DICT
+from .common import RULE_LIST
+
+@admin.register(Site)
+class SiteAdmin(admin.ModelAdmin):
+    list_display = ('name', 'main_url', 'created_at')
+
+@admin.register(Rule)
+class RuleAdmin(admin.ModelAdmin):
+    list_display = ('name', 'regex', 'desc_ko', 'created_at')
+
+@admin.register(RuleSet)
+class RuleSetAdmin(admin.ModelAdmin):
+    list_display = ('site', 'user', 'created_at')
+
+def approve_site(modeladmin, request, queryset):
+    for report_ruleset in queryset:
+
+        report_ruleset.status = 'approved'
+        report_ruleset.save()
+
+        reporter_profile = report_ruleset.user.profile
+        reporter_profile.set_point('site_approved')
+approve_site.short_description = "Approve this Report"
+
+def reject_site(modeladmin, request, queryset):
+    for report_ruleset in queryset:
+
+        report_ruleset.status = 'rejected'
+        report_ruleset.save()
+
+        reporter_profile = report_ruleset.user.profile
+        reporter_profile.set_point('site_rejected')
+reject_site.short_description = "Reject this Report"
+
+def late_site(modeladmin, request, queryset):
+    for report_ruleset in queryset:
+
+        report_ruleset.status = 'late'
+        report_ruleset.save()
+
+        reporter_profile = report_ruleset.user.profile
+        reporter_profile.set_point('site_late')
+late_site.short_description = "this Report is late"
+
+
+@admin.register(ReportSite)
+class ReportSiteAdmin(admin.ModelAdmin):
+    actions = [approve_site, reject_site, late_site,]
+    list_display = ('name', 'main_url', 'user', 'status', 'created_at')
 
 # XXX RULE SENSITIVE
 def approve_ruleset(modeladmin, request, queryset):
@@ -17,29 +65,34 @@ def approve_ruleset(modeladmin, request, queryset):
         new_ruleset.site = report_ruleset.site
         new_ruleset.save()
 
+        report_ruleset.status = 'approved'
+        report_ruleset.save()
+
         reporter_profile = report_ruleset.user.profile
-        reporter_profile.point = F('point') + POINT_DICT['ruleset_report']
-        reporter_profile.save()
-        reporter_profile.refresh_from_db()
+        reporter_profile.set_point('ruleset_approved')
 approve_ruleset.short_description = "Approve this Report"
 
-@admin.register(Site)
-class SiteAdmin(admin.ModelAdmin):
-    list_display = ('name', 'main_url', 'created_at')
+def reject_ruleset(modeladmin, request, queryset):
+    for report_ruleset in queryset:
 
-@admin.register(Rule)
-class RuleAdmin(admin.ModelAdmin):
-    list_display = ('name', 'regex', 'desc_ko', 'created_at')
+        report_ruleset.status = 'rejected'
+        report_ruleset.save()
 
-@admin.register(RuleSet)
-class RuleSetAdmin(admin.ModelAdmin):
-    list_display = ('site', 'user', 'created_at')
+        reporter_profile = report_ruleset.user.profile
+        reporter_profile.set_point('ruleset_rejected')
+reject_ruleset.short_description = "Reject this Report"
 
-@admin.register(ReportSite)
-class ReportSiteAdmin(admin.ModelAdmin):
-    list_display = ('name', 'main_url', 'user', 'status', 'created_at')
+def late_ruleset(modeladmin, request, queryset):
+    for report_ruleset in queryset:
+
+        report_ruleset.status = 'late'
+        report_ruleset.save()
+
+        reporter_profile = report_ruleset.user.profile
+        reporter_profile.set_point('ruleset_late')
+late_ruleset.short_description = "this Report is late"
 
 @admin.register(ReportRuleSet)
 class ReportRuleSetAdmin(admin.ModelAdmin):
-    actions = [approve_ruleset,]
+    actions = [approve_ruleset, reject_ruleset, late_ruleset,]
     list_display = ('site', 'user', 'status', 'created_at')

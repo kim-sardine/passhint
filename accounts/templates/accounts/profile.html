@@ -1,25 +1,93 @@
 {% extends "accounts/layout.html" %}
+{% load i18n %}
 {% block title %}Profile | passhint{% endblock title %}
 {% block accounts_content %}
 <div class="row">
-    <div class="col-md-8 mb-4">
-        <div>
-            <h2>{{ user }}'s Profile</h2>
+    <div class="col-lg-4 order-lg-2">
+        <!-- user info -->
+        <h4 class="mb-3">
+            {% trans "User Information" %}
+        </h4>
+        <ul class="list-group mb-3">
+            <li class="list-group-item">
+                <div>
+                    <h6 class="my-0"><strong>{% trans "Username" %}</strong></h6>
+                    <span>{{ user.get_username|default:"No Username" }}</span>
+                </div>
+            </li>
+            <li class="list-group-item">
+                <div>
+                    <h6 class="my-0"><strong>{% trans "Email" %}</strong></h6>
+                    <span>{{ user.email|default:"No Email" }}</span>
+                </div>
+            </li>
+            <li class="list-group-item">
+                <div>
+                    <h6 class="my-0"><strong>{% trans "Point" %}</strong></h6>
+                    <span>{{ user.profile.point }}</span>
+                </div>
+            </li>
+            <li class="list-group-item">
+                <div>
+                    <h6 class="my-0"><strong>{% trans "Joined at" %}</strong></h6>
+                    <span>{{ user.date_joined }}</span>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="col-lg-8 order-lg-1 mb-4 mt-4 mt-lg-0">
+        <div class="mb-3">
+            <h2>{% trans "Passhinter's history" %}</h2>
         </div>
+
         <hr>
-        <div>
-            <h4>Information</h4>
-            <p>username : {{ user.get_username|default:"No Username" }}</p>
-            <p>email : {{ user.email|default:"No Email" }}</p>
-            <p>point : {{ user.profile.point|default:"0" }}</p>
-            <p>date_joined : {{ user.date_joined|default:"No Data" }}</p>
-        </div> 
-        <hr>
-        <div>
-            {% comment %}
-            {% include "accounts/report_list.html" with report_new_list=report_new_list report_udpate_list=report_udpate_list %}
-            {% endcomment %}
+
+        <div class="mb-4">
+            <h4>{% trans "Passhint report" %}</h4>
         </div>
+        {% if report_rulesets %}
+            <ul class="list-group">
+                {% for report_ruleset in report_rulesets %}
+                    <li class="list-group-item d-flex justify-content-between {{ report_ruleset.class }}">
+                        <div>
+                            <h5 class="my-0"><a href="{% url "passhint:site_detail" report_ruleset.site.name %}">{{ report_ruleset.site.name }}</a></h5>
+                            <small class="text-muted">{{ report_ruleset.created_at }}</small>
+                        </div>
+                        <span class="text-muted">{{ report_ruleset.status }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <li class="list-group-item">
+                <div class="text-center">
+                    <h5>{% trans "No data yet" %}</h5>
+                </div>
+            </li>
+        {% endif %}
+
+        <div class="my-4">
+            <h4>{% trans "Site report" %}</h4>
+        </div>
+        {% if report_sites %}
+            <ul class="list-group">
+                {% for report_site in report_sites %}
+                    <li class="list-group-item d-flex justify-content-between {{ report_site.class }}">
+                        <div>
+                            <h5 class="my-0">{{ report_site.name }} <small class="text-muted font-italic">{{ report_site.main_url }}</small class="text-muted font-italic"></h5>
+                            <small class="text-muted">{{ report_site.created_at }}</small>
+                        </div>
+                        <span class="text-muted">{{ report_site.status }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <li class="list-group-item">
+                <div class="text-center">
+                    <h5>{% trans "No data yet" %}</h5>
+                </div>
+            </li>
+        {% endif %}
+
     </div>
 </div>
 {% endblock %}

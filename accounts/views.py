@@ -3,11 +3,15 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import login as auth_login
 from django.shortcuts import redirect, render, get_object_or_404
+from django.contrib.auth import get_user_model
+
 from allauth.socialaccount.models import SocialApp
 from allauth.socialaccount.views import SignupView
 from allauth.socialaccount.templatetags.socialaccount import get_providers
+
 from .forms import SignupForm, LoginForm, t_SignupForm
-from django.contrib.auth import get_user_model
+from passhint.models import ReportRuleSet, ReportSite
+
 
 class MySignupView(SignupView):
     template_name = ('accounts/signup_form.html')
@@ -19,12 +23,34 @@ def profile(request, username):
 
     user = get_object_or_404(get_user_model(), username=username)
 
-    # report_new_list = ReportNew.objects.filter(user=current_user)
-    # report_update_list = ReportUpdate.objects.filter(user=current_user)
-            # 'report_new_list' : report_new_list,
-            # 'report_update_list' : report_update_list
+    report_rulesets = ReportRuleSet.objects.filter(user=user)
+    
+    for report_ruleset in report_rulesets:
+        if report_ruleset.status == 'approved':
+            setattr(report_ruleset, 'class', 'list-group-item-primary')
+        elif report_ruleset.status == 'rejected':
+            setattr(report_ruleset, 'class', 'list-group-item-danger')
+        elif report_ruleset.status == 'late':
+            setattr(report_ruleset, 'class', 'list-group-item-warning')
+        else:
+            setattr(report_ruleset, 'class', '')
+
+    report_sites = ReportSite.objects.filter(user=user)
+
+    for report_site in report_sites:
+        if report_site.status == 'approved':
+            setattr(report_site, 'class', 'list-group-item-primary')
+        elif report_site.status == 'rejected':
+            setattr(report_site, 'class', 'list-group-item-danger')
+        elif report_site.status == 'late':
+            setattr(report_site, 'class', 'list-group-item-warning')
+        else:
+            setattr(report_site, 'class', '')
+
     return render(request, 'accounts/profile.html', {
             'user' : user,
+            'report_rulesets' : report_rulesets,
+            'report_sites' : report_sites
         })
 
 

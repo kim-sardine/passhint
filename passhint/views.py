@@ -135,6 +135,9 @@ def site_report(request):
             report_site.user = request.user
             report_site.save()
 
+            reporter_profile = request.user.profile
+            reporter_profile.set_point('site_report')
+
             # TODO Report Success Message : 제보 완료.. 등록까지 시간이 걸려요
             return redirect('main')
     else:    
@@ -165,6 +168,9 @@ def site_report_ruleset(request, site_name):
             ruleset.user = request.user
             ruleset.site = site
             ruleset.save()
+
+            reporter_profile = request.user.profile
+            reporter_profile.set_point('ruleset_report')
 
             # TODO Report Success Message : 제보 완료..
             return redirect('passhint:site_detail', site_name=site_name)
