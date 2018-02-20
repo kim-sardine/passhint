@@ -16,7 +16,7 @@
         
         {{ site.get_rule_set_list.get_true_rule_list|get_html_rule }}
     </div>
-    <div class="col-lg-4 pt-4 pt-lg-0">
+    <div class="col-lg-4 mt-4 mt-lg-0">
         <!-- user info -->
         <h4 class="mb-3">
              {% trans "Information" %}
@@ -24,14 +24,14 @@
         <ul class="list-group mb-3">
             <li class="list-group-item">
                 <div>
-                    <h5 class="my-0">{% trans "Site Reporter" %}</h5>
+                    <h6 class="my-0">{% trans "Site Reporter" %}</h6>
                     <strong>{{ site.user.username }}</strong>
                     <span> at {{ site.created_at }}</span>
                 </div>
             </li>
             <li class="list-group-item">
                 <div>
-                    <h5 class="my-0">{% trans "Passhint Reporter" %}</h5>
+                    <h6 class="my-0">{% trans "Passhint Reporter" %}</h6>
                     {% if site.get_rule_set_list %}
                         <strong>{{ site.get_rule_set_list.user.username }}</strong>
                         <span> at {{ site.get_rule_set_list.created_at }}</span>
@@ -42,13 +42,13 @@
             </li>
             <li class="list-group-item">
                 <div>
-                    <h5 class="my-0">{% trans "Hit" %}</h5>
+                    <h6 class="my-0">{% trans "Hit" %}</h6>
                     <span>{{ site.hit }}</span>
                 </div>
             </li>
         </ul>
     </div>
-    <div class="offset-lg-8 col-lg-4 pt-4 pt-lg-0">
+    <div class="offset-lg-8 col-lg-4 mt-4 mt-lg-0">
         <!-- user info -->
         <h4 class="mb-3">
             {% if site.get_rule_set_list %}

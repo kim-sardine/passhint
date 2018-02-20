@@ -3,6 +3,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.text import slugify
 
 from .models import Site, RuleSet, ReportSite, ReportRuleSet
+from .common import RULE_LIST
 
 class SiteSearchForm(forms.Form):
     keyword = forms.CharField(
@@ -43,13 +44,12 @@ class ReportSiteForm(forms.ModelForm):
         cleaned_data['name'] = name
         return cleaned_data
 
-
+# XXX RULE SENSITIVE
 class ReportRuleSetForm(forms.ModelForm):
     class Meta:
         model = ReportRuleSet
-        fields = ('len_min', 'len_max',
-                    'exc_special','exc_space','exc_id','exc_same','exc_series','exc_id','exc_common',
-                    'inc_special','inc_lower','inc_upper','inc_number','inc_letter')
+        fields = RULE_LIST
+
         labels = {
             "len_min": "Minimum length of password"
             }

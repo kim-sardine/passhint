@@ -134,6 +134,7 @@ class RuleSet(TimeStampedModel, BaseRuleSet):
     class Meta:
         ordering = ['-created_at']
 
+    # XXX RULE SENSITIVE
     @property
     def get_true_rule_list(self):
         
