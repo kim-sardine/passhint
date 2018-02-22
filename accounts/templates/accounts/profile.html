@@ -50,7 +50,12 @@
                 {% for report_ruleset in report_rulesets %}
                     <li class="list-group-item d-flex justify-content-between {{ report_ruleset.class }}">
                         <div>
-                            <h5 class="my-0"><a href="{% url "passhint:site_detail" report_ruleset.site.name %}">{{ report_ruleset.site.name }}</a></h5>
+                            <h5 class="my-0">
+                                <a href="{% url "passhint:site_detail" report_ruleset.site.name %}" 
+                                    class="text-info">
+                                    {{ report_ruleset.site.name }}
+                                </a>
+                            </h5>
                             <small class="text-muted">{{ report_ruleset.created_at }}</small>
                         </div>
                         <span class="text-muted">{{ report_ruleset.status }}</span>
@@ -60,7 +65,7 @@
         {% else %}
             <li class="list-group-item">
                 <div class="text-center">
-                    <h5>{% trans "No data yet" %}</h5>
+                    <h5>{% trans "No history yet" %}</h5>
                 </div>
             </li>
         {% endif %}
@@ -73,7 +78,7 @@
                 {% for report_site in report_sites %}
                     <li class="list-group-item d-flex justify-content-between {{ report_site.class }}">
                         <div>
-                            <h5 class="my-0">{{ report_site.name }} <small class="text-muted font-italic">{{ report_site.main_url }}</small class="text-muted font-italic"></h5>
+                            <h5 class="my-0"><span class="text-info">{{ report_site.name }}</span> <small class="text-muted font-italic">{{ report_site.main_url }}</small class="text-muted font-italic"></h5>
                             <small class="text-muted">{{ report_site.created_at }}</small>
                         </div>
                         <span class="text-muted">{{ report_site.status }}</span>
@@ -83,7 +88,7 @@
         {% else %}
             <li class="list-group-item">
                 <div class="text-center">
-                    <h5>{% trans "No data yet" %}</h5>
+                    <h5>{% trans "No history yet" %}</h5>
                 </div>
             </li>
         {% endif %}
