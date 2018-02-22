@@ -8,15 +8,6 @@ html {
     }
 }
 
-.my-button {
-    background-color: Transparent;
-    background-repeat: no-repeat;
-    border: none;
-    cursor: pointer;
-    overflow: hidden;
-    outline: none;
-}
-
 .active {
     font-weight: 630;
 }
@@ -48,6 +39,19 @@ html {
 
 .site-name {
     font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+}
+
+.my-button {
+    background-color: Transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+}
+
+.my-jumbotron {
+    background-color: #f8f9fa;
 }
 
 /* loading - the AJAX indicator */

@@ -13,8 +13,17 @@
         <p>
             {{ site.main_url|get_anchor_tag }}
         </p>
-        
-        {{ site.get_rule_set_list.get_true_rule_list|get_html_rule }}
+        <hr class="my-4">
+        <h4>Passhint</h4>
+        {% if site.get_rule_set_list %}
+            {{ site.get_rule_set_list.get_true_rule_list|get_html_rule }}
+
+            <hr class="my-4">
+            <h4>Passhint<small> - longer version</small></h4>
+
+        {% else %}
+            <h4>No Passhint yet. Chance to be the first passhinter</h4>
+        {% endif %}
     </div>
     <div class="col-lg-4 mt-4 mt-lg-0">
         <!-- user info -->

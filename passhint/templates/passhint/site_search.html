@@ -1,6 +1,5 @@
 {% extends "passhint/layout.html" %}
 {% load i18n %}
-{% load widget_tweaks %}
 {% load passhint_extras %}
 {% block title %}{{keyword}} | Search | passhint{% endblock title %}
 {% block passhint_content %}
@@ -16,15 +15,12 @@
         </div>
     {% endfor %} 
 {% else %}
-    <div class="jumbotron">
-        <h1 class="display-3">No Result Found</h1>
-        <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content
-            or information.</p>
-        <hr class="my-4">
-        <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-        <p class="lead">
-            <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-        </p>
-    </div>
+<div class="jumbotron text-center" style="background-color:#f8f9fa">
+    <h1 class="display-4">{% trans "No Result Found" %}</h1>
+    <hr class="my-4">
+    <h5>{% trans "If you do not have the site you want, please report the site." %}</h5>
+    <h5>{% trans "You can be the only reporter. And can get points!!" %}</h5>
+    <a class="btn btn-secondary btn-lg mt-4" href="{% url "passhint:site_report" %}" role="button">{% trans "Report Site" %}</a>
+</div>
 {% endif %}
 {% endblock passhint_content %}
