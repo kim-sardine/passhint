@@ -40,10 +40,12 @@ def get_html_rule_each(rule_string):
         desc_short = desc_short.replace('{len}', num)
         desc_en = desc_en.replace('{len}', num)
 
-    html = '<button type="button" class="btn btn-'+ level +' btn-sm m-1" title="'+ desc_short +'">'+ desc_en +'</button>'
+    html = '<button type="button" class="btn btn-'+ level +' btn-sm m-1" title="'+ desc_en +'">'+ desc_short +'</button>'
 
     return mark_safe(html)
 
+
+# TODO URL 부분은 믿을만한 library 이용하기
 @register.filter
 def get_anchor_tag(url):
 
