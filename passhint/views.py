@@ -14,7 +14,7 @@ from accounts.models import Profile
 
 
 def get_user_or_none(user):
-    return None if not user.is_authenticated else user
+    return user if user.is_authenticated else None
 
 # 메인 페이지
 # 서비스 이름으로 passhint 를 검색하고
@@ -107,9 +107,7 @@ def site_detail(request, site_name):
     site = get_object_or_404(Site.objects.prefetch_related('rule_sets').select_related('user'), name=site_name)
     
     # hit++
-    site.hit = F('hit') + 1
-    site.save()
-    site.refresh_from_db()
+    site.set_hit_plus_1()
 
     user = get_user_or_none(request.user)
 

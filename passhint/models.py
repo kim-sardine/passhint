@@ -4,7 +4,7 @@ from django.forms import URLField
 from django.utils.text import slugify
 from django.forms import ValidationError
 from django.utils import timezone
-from django.db.models import Q
+from django.db.models import F
 
 import datetime
 
@@ -76,6 +76,13 @@ class Site(TimeStampedModel):
             return result[0]
         else:
             return None
+
+    # hit += 1
+    def set_hit_plus_1(self):
+        self.hit = F('hit') + 1
+        self.save()
+        self.refresh_from_db()
+
 
 class Rule(TimeStampedModel):
 
