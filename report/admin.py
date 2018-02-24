@@ -1,6 +1,7 @@
 from django.contrib import admin
 
 from .models import ReportSite, ReportRuleSet
+from passhint.models import RuleSet
 from passhint.common import RULE_LIST
 
 def approve_site(modeladmin, request, queryset):

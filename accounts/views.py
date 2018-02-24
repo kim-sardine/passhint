@@ -17,6 +17,19 @@ class MySignupView(SignupView):
     template_name = ('accounts/signup_form.html')
 
 
+def set_report_class(report_list):
+    for report in report_list:
+        if report.status == 'approved':
+            setattr(report, 'class', 'list-group-item-primary')
+        elif report.status == 'rejected':
+            setattr(report, 'class', 'list-group-item-danger')
+        elif report.status == 'late':
+            setattr(report, 'class', 'list-group-item-warning')
+        else:
+            setattr(report, 'class', '')
+    
+    return report_list
+
 # TODO 본인일 떄 체크해서 정보 수정 메뉴 보여주기
 @login_required
 def profile(request, username):
@@ -25,27 +38,13 @@ def profile(request, username):
 
     report_rulesets = ReportRuleSet.objects.filter(user=user)
     
-    for report_ruleset in report_rulesets:
-        if report_ruleset.status == 'approved':
-            setattr(report_ruleset, 'class', 'list-group-item-primary')
-        elif report_ruleset.status == 'rejected':
-            setattr(report_ruleset, 'class', 'list-group-item-danger')
-        elif report_ruleset.status == 'late':
-            setattr(report_ruleset, 'class', 'list-group-item-warning')
-        else:
-            setattr(report_ruleset, 'class', '')
+    # 제보한 RuleSet 별로 승인 상태를 보여주기 위해 class 속성 설정
+    report_rulesets = set_report_class(report_rulesets)
 
     report_sites = ReportSite.objects.filter(user=user)
 
-    for report_site in report_sites:
-        if report_site.status == 'approved':
-            setattr(report_site, 'class', 'list-group-item-primary')
-        elif report_site.status == 'rejected':
-            setattr(report_site, 'class', 'list-group-item-danger')
-        elif report_site.status == 'late':
-            setattr(report_site, 'class', 'list-group-item-warning')
-        else:
-            setattr(report_site, 'class', '')
+    # 제보한 Site 별로 승인 상태를 보여주기 위해 class 속성 설정
+    report_sites = set_report_class(report_sites)
 
     return render(request, 'accounts/profile.html', {
             'user' : user,
