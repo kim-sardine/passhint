@@ -68,3 +68,20 @@ class LogSearch(models.Model):
             log.result = name
 
         log.save()
+
+
+class LogPoint(models.Model):
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True, on_delete=models.SET_NULL)
+    point = models.SmallIntegerField()
+    how = models.CharField(max_length=30, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.user
+
+    @classmethod
+    def save_log_point(cls, user, point, how):
+
+        log = cls(user=user, point=point, how=how)
+        log.save()
