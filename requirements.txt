@@ -1,1 +1,1 @@
--r reqs/prod.txt
+-r config/reqs/prod.txt
