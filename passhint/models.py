@@ -53,17 +53,21 @@ class Site(TimeStampedModel):
         super().save(*args, **kwargs)
 
     @property
-    def get_rule_set_list(self):
+    def get_recent_ruleset(self):
         return self.rule_sets.first()
 
     @property
     def get_tag_list(self):
         return self.tag.split(',')
 
-    # 태그가 완전 일치하는 사이트가 하나 존재하면 site 리턴
-    # 존재하지 않거나 복수 존재하면 None 리턴
     @classmethod
     def get_site_by_tag(cls, keyword):
+        '''
+        input : keyword
+        output : site (single)
+        태그가 완전 일치하는 사이트가 하나 존재하면 site 리턴
+        존재하지 않거나 복수 존재하면 None 리턴 -> 단 하나가 필요하므로 복수 존재해도 None 리턴
+        '''
         sites = cls.objects.all()
         
         result = []
@@ -82,6 +86,40 @@ class Site(TimeStampedModel):
         self.hit = F('hit') + 1
         self.save()
         self.refresh_from_db()
+
+    @classmethod
+    def search_by_url(cls, url):
+        '''
+        input : url
+        output : list of sites
+
+        1. remove first http(s):// part if exist
+        2. remove www. part if exist
+        3. split by "."
+        4. search Site with tag
+        5. if some part of url and Site's tag are same, put that site in results
+        '''
+
+        url_list = url.split('//')
+        # http(s):// 부분이 존재한다면
+        if len(url_list) > 1:
+            # 버리고 뒤쪽만 남기기
+            url = ''.join(url_list[1:])
+
+        # 맨 앞이 www. 이라면 제거하기
+        if url[:4] == 'www.':
+            url = url[4:]
+
+        # . 을 기준으로 split 후 앞부터 돌면서 검사
+        keyword_list = url.split(".")
+
+        results = []
+        for keyword in keyword_list:
+            site = Site.get_site_by_tag(keyword)
+            if site:
+                results.append(site)
+
+        return results
 
 
 class Rule(TimeStampedModel):

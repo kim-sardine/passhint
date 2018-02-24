@@ -5,6 +5,7 @@ psycopg2==2.7.3.2
 django-extensions==1.9.9
 django-widget-tweaks==1.4.1
 django-allauth==0.35.0
+djangorestframework==3.7.7
 
 Pillow==5.0.0
 six==1.11.0

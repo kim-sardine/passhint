@@ -67,7 +67,7 @@ def report_ruleset(request, site_name):
             # TODO Report Success Message : 제보 완료..
             return redirect('passhint:site_detail', site_name=site_name)
     else:
-        old_ruleset = site.get_rule_set_list
+        old_ruleset = site.get_recent_ruleset
         form = ReportRuleSetForm(instance=old_ruleset, label_suffix='')
 
     return render(request, 'report/report_ruleset.html', {

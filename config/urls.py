@@ -11,6 +11,8 @@ urlpatterns = [
     path('', main, name='main'),
     path('passhint/', include('passhint.urls')),
     path('report/', include('report.urls')),
+
+    path('api_v1/', include('api_v1.urls')),
     
     path('profile/<str:username>/', profile, name='profile'),
 

@@ -15,8 +15,8 @@
         </p>
         <hr class="my-4">
         <h4>Passhint</h4>
-        {% if site.get_rule_set_list %}
-            {{ site.get_rule_set_list.get_true_rule_list|get_html_rule }}
+        {% if site.get_recent_ruleset %}
+            {{ site.get_recent_ruleset.get_true_rule_list|get_html_rule }}
 
             <hr class="my-4">
             <h4>Passhint<small> - longer version</small></h4>
@@ -41,9 +41,9 @@
             <li class="list-group-item">
                 <div>
                     <h6 class="my-0">{% trans "Passhint Reporter" %}</h6>
-                    {% if site.get_rule_set_list %}
-                        <strong>{{ site.get_rule_set_list.user.username }}</strong>
-                        <span> at {{ site.get_rule_set_list.created_at }}</span>
+                    {% if site.get_recent_ruleset %}
+                        <strong>{{ site.get_recent_ruleset.user.username }}</strong>
+                        <span> at {{ site.get_recent_ruleset.created_at }}</span>
                     {% else %}
                         <span class="text-primary">{% trans "Be the first passhinter!" %}</span>
                     {% endif %}
@@ -60,7 +60,7 @@
     <div class="offset-lg-8 col-lg-4 mt-4 mt-lg-0">
         <!-- user info -->
         <h4 class="mb-3">
-            {% if site.get_rule_set_list %}
+            {% if site.get_recent_ruleset %}
                 {% trans "Update passhint" %}
             {% else %}
                 {% trans "Report passhint" %}
@@ -69,7 +69,7 @@
         <ul class="list-group mb-3">
             <li class="list-group-item">
                 <div>
-                    {% if site.get_rule_set_list %}
+                    {% if site.get_recent_ruleset %}
                         <h6 class="my-0">{% trans "Update passhint and get points!" %}</h6>
                     {% else %}
                         {% trans "Be the first passhinter and get points!" %}
