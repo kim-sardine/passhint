@@ -3,12 +3,14 @@ from django.shortcuts import redirect
 from django.contrib import admin
 from django.urls import path, re_path, include
 from django.views.static import serve
+
 from passhint.views import main
 from accounts.views import profile
 
 urlpatterns = [
     path('', main, name='main'),
     path('passhint/', include('passhint.urls')),
+    path('report/', include('report.urls')),
     
     path('profile/<str:username>/', profile, name='profile'),
 

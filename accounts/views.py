@@ -10,7 +10,7 @@ from allauth.socialaccount.views import SignupView
 from allauth.socialaccount.templatetags.socialaccount import get_providers
 
 from .forms import SignupForm, LoginForm, t_SignupForm
-from passhint.models import ReportRuleSet, ReportSite
+from report.models import ReportRuleSet, ReportSite
 
 
 class MySignupView(SignupView):
