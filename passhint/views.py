@@ -51,21 +51,24 @@ def main(request):
     else:    
         form = SiteSearchForm()
 
+
+    MAIN_ITEM_NUMBER = 7
+
     # hit 기준 정렬
-    all_time_ranking = Site.objects.all().order_by('-hit')[:7]
+    all_time_ranking = Site.objects.all().order_by('-hit')[:MAIN_ITEM_NUMBER]
 
     # log 모델 필요
-    this_weak_ranking = LogSite.get_sorted_site_recent_nday(7)[:7]
+    this_weak_ranking = LogSite.get_sorted_site_recent_nday(7)[:MAIN_ITEM_NUMBER]
     # today_ranking
     
     # created at 기준 정렬
-    new_site_list = Site.objects.all().order_by('name')[:7]
+    new_site_list = Site.objects.all().order_by('name')[:MAIN_ITEM_NUMBER]
     
     # log created at 기준 정렬
     # recent_search_list
 
     # hit 기준 정렬
-    best_passhinter = Profile.objects.all().order_by('-point')[:7]
+    best_passhinter = Profile.objects.all().order_by('-point')[:MAIN_ITEM_NUMBER]
 
     return render(request, 'passhint/main.html', {
         'form' : form,
