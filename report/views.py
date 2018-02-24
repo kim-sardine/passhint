@@ -27,8 +27,13 @@ def report_site(request):
     else:    
         form = ReportSiteForm()
 
+    name = request.GET.get('name', '')
+    url = request.GET.get('url', '')
+
     return render(request, 'report/report_site.html', {
         'form' : form,
+        'name' : name,
+        'url' : url,
         'nav_report_site' : 'active',
     })
 

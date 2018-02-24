@@ -28,10 +28,10 @@
                     {% endif %}
 
                     <!-- form : name -->
-                    {% include "form/base.html" with form=form element=form.name %}
+                    {% include "form/base.html" with form=form element=form.name value=name %}
                     
                     <!-- form : main_url -->
-                    {% include "form/base.html" with form=form element=form.main_url %}
+                    {% include "form/base.html" with form=form element=form.main_url value=url %}
 
                     <div class="text-right mt-2">
                         <button type="submit" class="btn btn-secondary">{% trans "Submit" %}</button>
