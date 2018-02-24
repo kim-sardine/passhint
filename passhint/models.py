@@ -101,7 +101,12 @@ class Rule(TimeStampedModel):
     desc_short = models.CharField(max_length=200)
     error_ko = models.CharField(max_length=200)
     error_en = models.CharField(max_length=200)
+    label = models.CharField(max_length=50, default="New rule")
     level = models.CharField(max_length=15, choices=LEVEL_CHOICES)
+
+
+    class Meta:
+        ordering = ['-name']
 
     def __str__(self):
         return '{}-{}'.format(self.name, self.desc_short)
@@ -117,7 +122,6 @@ class BaseRuleSet(models.Model):
     exc_id = models.BooleanField(default=False)
     exc_same = models.BooleanField(default=False)
     exc_series = models.BooleanField(default=False)
-    exc_id = models.BooleanField(default=False)
     exc_common = models.BooleanField(default=False)
     
     inc_special = models.BooleanField(default=False)

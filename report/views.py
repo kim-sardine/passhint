@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 
 from passhint.models import Site
+from passhint.common import POINT_DICT
+
 from .models import ReportRuleSet
 from .forms import ReportSiteForm, ReportRuleSetForm
     
@@ -20,7 +22,7 @@ def report_site(request):
             report_site.save()
 
             reporter_profile = request.user.profile
-            reporter_profile.set_point('site_report')
+            reporter_profile.set_point('Site : report')
 
             # TODO Report Success Message : 제보 완료.. 등록까지 시간이 걸려요
             return redirect('main')
@@ -34,6 +36,7 @@ def report_site(request):
         'form' : form,
         'name' : name,
         'url' : url,
+        'point_dict': POINT_DICT,
         'nav_report_site' : 'active',
     })
 
@@ -59,14 +62,16 @@ def report_ruleset(request, site_name):
             ruleset.save()
 
             reporter_profile = request.user.profile
-            reporter_profile.set_point('ruleset_report')
+            reporter_profile.set_point('Passhint : report')
 
             # TODO Report Success Message : 제보 완료..
             return redirect('passhint:site_detail', site_name=site_name)
-    else:    
-        form = ReportRuleSetForm()
+    else:
+        old_ruleset = site.get_rule_set_list
+        form = ReportRuleSetForm(instance=old_ruleset, label_suffix='')
 
     return render(request, 'report/report_ruleset.html', {
         'form' : form,
         'site' : site,
+        'point_dict' : POINT_DICT,
     })

@@ -3,8 +3,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.text import slugify
 
 from .models import ReportSite, ReportRuleSet
-from passhint.models import Site, RuleSet
-from passhint.common import RULE_LIST
+from passhint.models import Site, Rule, RuleSet
 
 class ReportSiteForm(forms.ModelForm):
     class Meta:
@@ -37,13 +36,14 @@ class ReportSiteForm(forms.ModelForm):
 class ReportRuleSetForm(forms.ModelForm):
     class Meta:
         model = ReportRuleSet
-        fields = RULE_LIST
+        fields = [rule.name for rule in Rule.objects.all()]
 
         labels = {
-            "len_min": "Minimum length of password"
-            }
+            rule.name:rule.label for rule in Rule.objects.all()
+        }
         help_texts = {
-            'len_min': 'Remain Empty if no limit'
+            'len_min': 'Remain Empty if no limit',
+            'len_max': 'Remain Empty if no limit',
         }
 
     def clean_len_min(self):

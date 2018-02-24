@@ -1,0 +1,19 @@
+{% load i18n %}
+<h5 class="mb-3">{% trans "Table of Points" %}</h5>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Case</th>
+            <th scope="col">Point</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for key, value in point_dict.items %}
+            <tr>
+                <th scope="row">{{key}}</th>
+                <td>{{value}}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<span class="text-muted">{% trans "#late : same content, but someone has already reported it." %}</span>

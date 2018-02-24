@@ -43,8 +43,12 @@
     </div>
 
     <div class="col-lg-4">
-        <div class="p-4 border rounded">
-            You can get point and ......... some guide
+        <div class="p-4 border rounded mt-4 mt-lg-0">
+            {% trans "Your submission will be reviewed and approved." %}
+        </div>
+
+        <div class="p-4 border rounded mt-4">
+            {% include "report/point_table.html" with point_dict=point_dict %}
         </div>
     </div>
 </div>

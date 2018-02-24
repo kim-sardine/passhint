@@ -26,43 +26,53 @@
                             {% endfor %}
                         </div>
                     {% endif %}
-            
-                    {% for field in form.visible_fields %}
-                        <div class="form-group">
-                            {{ field.label_tag }}
-            
-                            {% if form.is_bound %}
-                                {% if field.errors %}
-                                    {% render_field field class="form-control is-invalid" %}
-                                    {% for error in field.errors %}
-                                        <div class="invalid-feedback">
-                                            {{ error }}
-                                        </div>
-                                    {% endfor %}
-                                {% else %}
-                                    {% render_field field class="form-control is-valid" %}
-                                {% endif %}
-                            {% else %}
-                                {% render_field field class="form-control" %}
-                            {% endif %}
-            
-                            {% if field.help_text %}
-                                <small class="form-text text-muted">{{ field.help_text }}</small>
-                            {% endif %}
+
+                    <div class="row">
+                        <div class="col-lg-12 text-center mb-3 text-info">
+                            <h4>LENGTH</h4>
                         </div>
-                    {% endfor %}
-                </div>
-        
-                <div class="text-right mt-2">
-                    <button type="submit" class="btn btn-secondary">{% trans "Submit" %}</button>
+                        {% include "form/report/ruleset_len.html" with form=form element=form.len_min %}
+                        {% include "form/report/ruleset_len.html" with form=form element=form.len_max %}
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-lg-12 text-center my-3 text-success">
+                            <h4>MUST</h4>
+                        </div>
+                        {% include "form/report/ruleset_checkbox.html" with form=form element=form.inc_lower %}
+                        {% include "form/report/ruleset_checkbox.html" with form=form element=form.inc_upper %}
+                        {% include "form/report/ruleset_checkbox.html" with form=form element=form.inc_letter %}
+                        {% include "form/report/ruleset_checkbox.html" with form=form element=form.inc_number %}
+                        {% include "form/report/ruleset_checkbox.html" with form=form element=form.inc_special %}
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-lg-12 text-center my-3 text-danger">
+                            <h4>MUST NOT</h4>
+                        </div>
+                        {% include "form/report/ruleset_checkbox.html" with form=form element=form.exc_special %}
+                        {% include "form/report/ruleset_checkbox.html" with form=form element=form.exc_space %}
+                        {% include "form/report/ruleset_checkbox.html" with form=form element=form.exc_id %}
+                        {% include "form/report/ruleset_checkbox.html" with form=form element=form.exc_same %}
+                        {% include "form/report/ruleset_checkbox.html" with form=form element=form.exc_series %}
+                        {% include "form/report/ruleset_checkbox.html" with form=form element=form.exc_common %}
+                    </div>
+            
+                    <div class="text-right mt-2">
+                        <button type="submit" class="btn btn-secondary">{% trans "Submit" %}</button>
+                    </div>
                 </div>
             </form>
         </div>
         
     </div>
     <div class="col-lg-4">
-        <div class="p-4 border rounded">
-            asdasdasda
+        <div class="p-4 border rounded mt-4 mt-lg-0">
+            {% trans "Your submission will be reviewed and approved." %}
+        </div>
+
+        <div class="p-4 border rounded mt-4">
+            {% include "report/point_table.html" with point_dict=point_dict %}
         </div>
     </div>
 </div>

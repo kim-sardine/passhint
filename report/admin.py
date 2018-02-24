@@ -1,8 +1,7 @@
 from django.contrib import admin
 
 from .models import ReportSite, ReportRuleSet
-from passhint.models import RuleSet
-from passhint.common import RULE_LIST
+from passhint.models import Rule, RuleSet
 
 def approve_site(modeladmin, request, queryset):
     for report_ruleset in queryset:
@@ -11,7 +10,7 @@ def approve_site(modeladmin, request, queryset):
         report_ruleset.save()
 
         reporter_profile = report_ruleset.user.profile
-        reporter_profile.set_point('site_approved')
+        reporter_profile.set_point('Site : approved')
 approve_site.short_description = "Approve this Report"
 
 def reject_site(modeladmin, request, queryset):
@@ -21,7 +20,7 @@ def reject_site(modeladmin, request, queryset):
         report_ruleset.save()
 
         reporter_profile = report_ruleset.user.profile
-        reporter_profile.set_point('site_rejected')
+        reporter_profile.set_point('Site : rejected')
 reject_site.short_description = "Reject this Report"
 
 def late_site(modeladmin, request, queryset):
@@ -31,7 +30,7 @@ def late_site(modeladmin, request, queryset):
         report_ruleset.save()
 
         reporter_profile = report_ruleset.user.profile
-        reporter_profile.set_point('site_late')
+        reporter_profile.set_point('Site : late')
 late_site.short_description = "this Report is late"
 
 
@@ -45,7 +44,8 @@ def approve_ruleset(modeladmin, request, queryset):
     for report_ruleset in queryset:
 
         new_ruleset = RuleSet()
-        for rule in RULE_LIST:
+        all_rule_list = [rule.name for rule in Rule.objects.all()]
+        for rule in all_rule_list:
             rule_value = getattr(report_ruleset, rule)
             setattr(new_ruleset, rule, rule_value)
         
@@ -57,7 +57,7 @@ def approve_ruleset(modeladmin, request, queryset):
         report_ruleset.save()
 
         reporter_profile = report_ruleset.user.profile
-        reporter_profile.set_point('ruleset_approved')
+        reporter_profile.set_point('Passhint : approved')
 approve_ruleset.short_description = "Approve this Report"
 
 def reject_ruleset(modeladmin, request, queryset):
@@ -67,7 +67,7 @@ def reject_ruleset(modeladmin, request, queryset):
         report_ruleset.save()
 
         reporter_profile = report_ruleset.user.profile
-        reporter_profile.set_point('ruleset_rejected')
+        reporter_profile.set_point('Passhint : rejected')
 reject_ruleset.short_description = "Reject this Report"
 
 def late_ruleset(modeladmin, request, queryset):
@@ -77,7 +77,7 @@ def late_ruleset(modeladmin, request, queryset):
         report_ruleset.save()
 
         reporter_profile = report_ruleset.user.profile
-        reporter_profile.set_point('ruleset_late')
+        reporter_profile.set_point('Passhint : late')
 late_ruleset.short_description = "this Report is late"
 
 @admin.register(ReportRuleSet)
