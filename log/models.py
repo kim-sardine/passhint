@@ -52,21 +52,7 @@ class LogSearch(models.Model):
     @classmethod
     def save_log_search(cls, user, keyword, result):
 
-        log = cls(keyword=keyword)
-        if user:
-            log.user = user
-
-        if result:
-            try:
-                name = result.name
-            except AttributeError: # Many result
-                name = []
-                for site in result:
-                    name.append(site.name)
-                name = ','.join(name)
-            
-            log.result = name
-
+        log = cls(user=user, keyword=keyword, result=result)
         log.save()
 
 
@@ -84,4 +70,20 @@ class LogPoint(models.Model):
     def save_log_point(cls, user, point, how):
 
         log = cls(user=user, point=point, how=how)
+        log.save()
+
+
+class LogAPISearch(models.Model):
+
+    url = models.CharField(max_length=30, blank=True, null=True)
+    result = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.url
+
+    @classmethod
+    def save_log_api_search(cls, url, result):
+
+        log = cls(url=url, result=result)
         log.save()

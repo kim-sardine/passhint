@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import LogSearch, LogSite, LogPoint
+from .models import LogSearch, LogSite, LogPoint, LogAPISearch
 
 @admin.register(LogSite)
 class LogSiteAdmin(admin.ModelAdmin):
@@ -12,3 +12,7 @@ class LogSearchAdmin(admin.ModelAdmin):
 @admin.register(LogPoint)
 class LogPointAdmin(admin.ModelAdmin):
     list_display = ('user', 'point', 'how', 'created_at')
+
+@admin.register(LogAPISearch)
+class LogAPISearchAdmin(admin.ModelAdmin):
+    list_display = ('url', 'result', 'created_at')

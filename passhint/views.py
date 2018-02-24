@@ -41,11 +41,12 @@ def main(request):
                     return HttpResponseRedirect(reverse('passhint:site_search') + '?q='+keyword)
                 else: # 완전 일치하는 것이 딱 하나 존재하면 detail 로 이동
                     # 로그 저장
-                    LogSearch.save_log_search(user, keyword, found_site)
+                    LogSearch.save_log_search(user, keyword, found_site.name)
                     return redirect('passhint:site_detail', site_name=found_site.name)
             else:
+                # name 일치 존재
                 # 로그 저장
-                LogSearch.save_log_search(user, keyword, site)
+                LogSearch.save_log_search(user, keyword, site.name)
                 return redirect('passhint:site_detail', site_name=keyword)
 
     else:    
@@ -92,7 +93,8 @@ def site_search(request):
 
         # 로그 저장
         user = get_user_or_none(request.user)
-        LogSearch.save_log_search(user, keyword, sites)
+        site_name_list = [site.name for site in sites]
+        LogSearch.save_log_search(user, keyword, ','.join(site_name_list))
     else:
         keyword = 'All site'
         sites = Site.objects.all().prefetch_related('rule_sets').order_by(ordey_by)
