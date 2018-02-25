@@ -10,7 +10,7 @@
                 <a href="{% url "passhint:site_detail" site.name %}">
                     <h4 class="card-title">{{ site.name }}</h4>
                 </a>
-                {{ site.get_recent_ruleset.get_true_rule_list|get_html_rule }}
+                {% get_html_rule site.get_recent_ruleset.get_true_rule_list 'desc_short' %}
             </div>
         </div>
     {% endfor %} 

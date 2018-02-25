@@ -6,18 +6,18 @@ register = template.Library()
 
 # input : Rule
 # ouput : HTML (button?)
-@register.filter
-def get_html_rule(rule_list):
+@register.simple_tag
+def get_html_rule(rule_list, field):
 
     result = ''
     for rule_string in rule_list:
-        html = get_html_rule_each(rule_string)
+        html = get_html_rule_each(rule_string, field)
         result += html
     return mark_safe(result)
 
 
 @register.filter
-def get_html_rule_each(rule_string):
+def get_html_rule_each(rule_string, field):
     
     rule_splited = rule_string.split('_')
 
@@ -40,7 +40,14 @@ def get_html_rule_each(rule_string):
         desc_short = desc_short.replace('{len}', num)
         desc_en = desc_en.replace('{len}', num)
 
-    html = '<button type="button" class="btn btn-'+ level +' btn-sm m-1" title="'+ desc_en +'">'+ desc_short +'</button>'
+    if field == 'desc_short':
+        text = desc_short
+    elif field == 'desc_en':
+        text = desc_en
+    else: # exception
+        text = desc_en
+
+    html = '<button type="button" class="btn btn-'+ level +' btn-sm m-1" title="'+ desc_en +'">'+ text +'</button>'
 
     return mark_safe(html)
 
