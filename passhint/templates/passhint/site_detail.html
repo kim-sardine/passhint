@@ -18,10 +18,7 @@
         {% if site.get_recent_ruleset %}
             {% get_html_rule site.get_recent_ruleset.get_true_rule_list 'desc_short' %}
             
-            <hr class="my-4">
-            
-            <h4>Passhint<small> - longer version</small></h4>
-            {% get_html_rule site.get_recent_ruleset.get_true_rule_list 'desc_en' %}
+            {% comment %} <hr class="my-4"> {% endcomment %}
 
         {% else %}
             <h4>No Passhint yet. Chance to be the first passhinter</h4>
@@ -80,6 +77,15 @@
                     </div>
                 </li>
             </ul>
+        </div>
+
+        <div>
+            <h4 class="mb-3">
+                {% trans "Rule Guide" %}
+            </h4>
+            <div class="p-4 border rounded mt-4">
+                {% include "passhint/rule_info.html" %}
+            </div>
         </div>
     </div>
 </div>
