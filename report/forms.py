@@ -36,14 +36,18 @@ class ReportSiteForm(forms.ModelForm):
 class ReportRuleSetForm(forms.ModelForm):
     class Meta:
         model = ReportRuleSet
-        fields = [rule.name for rule in Rule.objects.all()]
+        fields = '__all__'
 
-        labels = {
-            rule.name:rule.label for rule in Rule.objects.all()
-        }
         help_texts = {
             'len_min': 'Remain Empty if no limit',
             'len_max': 'Remain Empty if no limit',
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(ReportRuleSetForm, self).__init__(*args, **kwargs)
+        self.fields = [rule.name for rule in Rule.objects.all()]
+        self.labels = {
+            rule.name: rule.label for rule in Rule.objects.all()
         }
 
     def clean_len_min(self):
