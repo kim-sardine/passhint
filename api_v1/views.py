@@ -5,8 +5,9 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-from passhint.models import Site, RuleSet
+from passhint.models import Site, Rule, RuleSet
 from log.models import LogAPISearch
+from passhint.templatetags.passhint_extras import get_html_rule
 
 class passhint(APIView):
 
@@ -24,7 +25,8 @@ class passhint(APIView):
             ruleset = site.get_recent_ruleset
             if ruleset:
                 rule_list = ruleset.get_true_rule_list
-                result = {'name' : site.name, 'rule_list' : rule_list}
+                rule_html = get_html_rule(rule_list, 'desc_en')
+                result = {'name' : site.name, 'rule_html' : rule_html}
                 results.append(result)
 
                 log_site_name_list.append(site.name)
