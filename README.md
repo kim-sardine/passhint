@@ -1,1 +1,2 @@
-Let's make passhint once again
+# passhint
+let user know password rule
