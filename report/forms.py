@@ -4,6 +4,7 @@ from django.utils.text import slugify
 
 from .models import ReportSite, ReportRuleSet
 from passhint.models import Site, Rule, RuleSet
+from passhint.common import RULE_LIST
 
 class ReportSiteForm(forms.ModelForm):
     class Meta:
@@ -36,7 +37,7 @@ class ReportSiteForm(forms.ModelForm):
 class ReportRuleSetForm(forms.ModelForm):
     class Meta:
         model = ReportRuleSet
-        fields = '__all__'
+        fields = RULE_LIST
 
         help_texts = {
             'len_min': 'Remain Empty if no limit',
@@ -45,7 +46,6 @@ class ReportRuleSetForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(ReportRuleSetForm, self).__init__(*args, **kwargs)
-        self.fields = [rule.name for rule in Rule.objects.all()]
         self.labels = {
             rule.name: rule.label for rule in Rule.objects.all()
         }
