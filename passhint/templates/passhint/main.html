@@ -72,7 +72,7 @@
                         {% for passhinter in best_passhinter %}
                         <li class="list-group-item text-truncate">
                             {{ forloop.counter }}.
-                            <a class="text-info" href="">{{passhinter.user.username}}</a>
+                            <a class="text-info" href="{% url "profile" passhinter.user.username %}">{{passhinter.user.username}}</a>
                         </li>
                         {% endfor %}
                     </ul>
