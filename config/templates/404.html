@@ -1,0 +1,37 @@
+{% load static %}
+{% load i18n %}
+<!doctype html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>passhint</title>
+    <link rel="shortcut icon" type="image/png" href="{% static "img/favicon.png" %}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link href="{% static "css/style.css" %}" media="all" rel="Stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="{% static "assets/css/jquery-ui.css" %}" media="all" rel="Stylesheet" type="text/css" />
+    <link href="{% static "assets/css/bootstrap.min.css" %}" media="all" rel="Stylesheet" type="text/css" />
+    <script src="{% static "assets/js/jquery-3.3.1.min.js" %}"></script>
+    <script src="{% static "assets/js/jquery-ui.min.js" %}"></script>
+    <script src="{% static "js/my_script.js" %}"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="text-center my-5">
+            <h1 class="display-4">passhint</h1>
+        </div>
+
+        <div class="offset-md-2 col-md-8 text-center py-5">
+            <div class="text-light bg-dark">
+                <h1>PAGE NOT FOUND</h1>
+            </div>
+        </div>
+        
+        {% include "main_carousel.html" %}
+        
+    <link href="{% static "assets/css/bootstrap.min.css" %}" media="all" rel="Stylesheet" type="text/css" />
+    <script src="{% static "assets/js/popper.min.js" %}"></script>
+    <script src="{% static "assets/js/bootstrap.min.js" %}"></script>
+</body>
+</html>

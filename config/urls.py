@@ -6,6 +6,7 @@ from django.views.static import serve
 
 from passhint.views import main
 from accounts.views import profile
+from config.settings.base import get_secret
 
 urlpatterns = [
     path('', main, name='main'),
@@ -18,7 +19,7 @@ urlpatterns = [
 
     path('accounts/', include('accounts.urls')),
     path('accounts/', include('allauth.urls')),
-    path('admin/', admin.site.urls),
+    path( get_secret("ADMIN_URL") +'/', admin.site.urls),
 ]
 
 
