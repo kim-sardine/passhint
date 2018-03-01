@@ -114,13 +114,15 @@ def site_detail(request, site_name):
     # hit++
     site.set_hit_plus_1()
 
-    user = get_user_or_none(request.user)
-
     # 로그 저장
+    user = get_user_or_none(request.user)
     LogSite.save_log_site(site, user)
+
+    rules = Rule.objects.all()
 
     return render(request, 'passhint/site_detail.html', {
         'site' : site,
+        'rules' : rules,
         })
 
 @csrf_exempt

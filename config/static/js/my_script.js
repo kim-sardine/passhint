@@ -4,3 +4,7 @@ $(function () {
         autoFocus: true
     });
 });
+
+$(function () {
+    $('[data-toggle="popover"]').popover()
+  })

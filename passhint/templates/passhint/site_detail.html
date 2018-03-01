@@ -4,6 +4,7 @@
 {% load passhint_extras %}
 {% block title %}{{ site.name }} | passhint{% endblock title %}
 {% block passhint_content %}
+{% get_current_language as LANGUAGE_CODE %}
 <div class="row">
     <div class="col-lg-8">
         <!-- passhint info -->
@@ -15,13 +16,24 @@
         </p>
         <hr class="my-4">
         <h4>Passhint</h4>
+        
         {% if site.get_recent_ruleset %}
-            {% get_html_rule site.get_recent_ruleset.get_true_rule_list 'desc_short' %}
+         
+            {% get_html_rule site.get_recent_ruleset.get_true_rule_list LANGUAGE_CODE %}
+        
+            <hr class="my-4">
+
+            <div class="text-right">
+                <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#rule_guide_modal">
+                    {% trans "Rule Guide" %}
+                </button>
+            </div>
+
+            {% include "passhint/rule_guide_modal.html" with rules=rules %}
             
-            {% comment %} <hr class="my-4"> {% endcomment %}
 
         {% else %}
-            <h4>No Passhint yet. Chance to be the first passhinter</h4>
+            <h4>{% trans "No Passhint yet. Chance to be the first passhinter" %}</h4>
         {% endif %}
     </div>
     <div class="col-lg-4 mt-4 mt-lg-0">
@@ -79,15 +91,6 @@
             </ul>
         </div>
 
-        {% comment %} TODO Rule 관련 가이드 제공 : /about/rule ? {% endcomment %}
-        {% comment %} <div>
-            <h4 class="mb-3">
-                {% trans "Rule Guide" %}
-            </h4>
-            <div class="p-4 border rounded mt-4">
-                <a class="btn btn-info btn-block" href="#">{% trans "Link" %}</a>
-            </div>
-        </div> {% endcomment %}
     </div>
 </div>
 <br>

@@ -18,7 +18,7 @@ def get_html_rule(rule_list, field):
     return mark_safe(result)
 
 
-@register.filter
+@register.simple_tag
 def get_html_rule_each(rule_string, field):
     
     rule_splited = rule_string.split('_')
@@ -31,36 +31,36 @@ def get_html_rule_each(rule_string, field):
     except Rule.DoesNotExist:
         return ''
 
-    level = rule.level
     desc_short = rule.desc_short
     desc_en = rule.desc_en
     desc_ko = rule.desc_ko
+    guide_ko = rule.guide_ko
+    guide_en = rule.guide_en
 
     # 숫자 rule의 경우 내용 변환
     if rule_splited[0] == 'len':
-        num = rule_splited[2]
-        level = level.replace('{len}', num)
+        try:
+            num = rule_splited[2]
+        except:
+            num = '123'
         desc_short = desc_short.replace('{len}', num)
         desc_en = desc_en.replace('{len}', num)
         desc_ko = desc_ko.replace('{len}', num)
+        guide_ko = guide_ko.replace('{len}', num)
+        guide_en = guide_en.replace('{len}', num)
 
 
-    # display version 에 따라 형식 변경
-    language_code = get_language()
+    # display version 에 따라 형식 변경. 기본은 영어
+    text = desc_en
+    guide = guide_en
 
-    if language_code == 'ko': # 한글 사용자에게는 한글 출력
+    if field == 'ko':
         text = desc_ko
-    else: # 그 외 사용자에게는 영어 출력
-        if field == 'desc_short':
-            text = desc_short
-        elif field == 'desc_en':
-            text = desc_en
-        else: # exception
-            text = desc_en
+        guide = guide_ko
+    elif field == 'short':
+        text = desc_short
 
-    # text = desc_ko
-
-    html = '<button type="button" class="btn btn-'+ level +' btn-sm m-1" title="'+ desc_en +'">'+ text +'</button>'
+    html = '<button type="button" class="btn btn-'+ rule.level +' btn-sm m-1" data-toggle="popover" data-placement="top" data-trigger="focus" data-content="' + guide + '">'+ text +'</button>'
 
     return mark_safe(html)
 

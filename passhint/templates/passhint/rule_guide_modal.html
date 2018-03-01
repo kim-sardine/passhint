@@ -1,0 +1,31 @@
+{% load i18n %}
+{% load passhint_extras %}
+{% get_current_language as LANGUAGE_CODE %}
+<div class="modal fade" id="rule_guide_modal" tabindex="-1" role="dialog" aria-labelledby="rule_guide_modal_title" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="rule_guide_modal_long_title">{% trans "Rule guide" %}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            {% for rule in rules %}
+                <div>
+                    {% get_html_rule_each rule.name LANGUAGE_CODE %}
+                    
+                    {% if LANGUAGE_CODE == 'ko' %}
+                        {{ rule.guide_ko }}
+                    {% else %}
+                        {{ rule.guide_en }}
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">{% trans "Close" %}</button>
+        </div>
+        </div>
+    </div>
+</div>
