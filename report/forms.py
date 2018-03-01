@@ -1,6 +1,7 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 from django.utils.text import slugify
+from django.utils.translation import get_language
 
 from .models import ReportSite, ReportRuleSet
 from passhint.models import Site, Rule, RuleSet
@@ -46,9 +47,10 @@ class ReportRuleSetForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(ReportRuleSetForm, self).__init__(*args, **kwargs)
-        self.labels = {
-            rule.name: rule.label for rule in Rule.objects.all()
-        }
+
+        for rule_name in RULE_LIST:
+            rule = Rule.objects.get(name=rule_name)
+            self.fields[rule_name].label = rule.desc_ko.replace(': {len}', '').strip() if get_language() in ['ko-kr', 'ko'] else rule.desc_en.replace(': {len}', '').strip()
 
     def clean_len_min(self):
         len_min = self.cleaned_data.get('len_min')
