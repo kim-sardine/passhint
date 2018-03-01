@@ -139,9 +139,9 @@ class Rule(TimeStampedModel):
     desc_short = models.CharField(max_length=200)
     error_ko = models.CharField(max_length=200)
     error_en = models.CharField(max_length=200)
-    label = models.CharField(max_length=50, default="New rule")
+    guide_ko = models.CharField(max_length=200)
+    guide_en = models.CharField(max_length=200)
     level = models.CharField(max_length=15, choices=LEVEL_CHOICES)
-
 
     class Meta:
         ordering = ['-name']
@@ -229,4 +229,3 @@ class RuleSet(TimeStampedModel, BaseRuleSet):
             result.append('inc_letter')
 
         return result
-

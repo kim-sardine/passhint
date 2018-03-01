@@ -1,0 +1,249 @@
+[
+    {
+        "model": "passhint.rule",
+        "pk": 2,
+        "fields": {
+            "created_at": "2018-02-03T12:32:17.042Z",
+            "updated_at": "2018-03-01T17:09:13.098Z",
+            "name": "len_min",
+            "regex": "^[ \\S]{{len},}$",
+            "regex_result": true,
+            "desc_ko": "\ube44\ubc00\ubc88\ud638 \ucd5c\uc18c \uae38\uc774 : {len}",
+            "desc_en": "Minimum length of password : {len}",
+            "desc_short": "minimum : {len}",
+            "error_ko": "\ube44\ubc00\ubc88\ud638 \uae38\uc774\uac00 {len} \uae00\uc790 \ubcf4\ub2e4 \uc9e7\uc2b5\ub2c8\ub2e4",
+            "error_en": "Your password is shorter then {len} letters",
+            "guide_ko": "\ube44\ubc00\ubc88\ud638\uc758 \uae38\uc774\ub294 \ucd5c\uc18c 123 \uae00\uc790 \uc774\uc0c1\uc774\uc5b4\uc57c \ud569\ub2c8\ub2e4.",
+            "guide_en": "Length of the password  should be longer that 123 characters.",
+            "level": "info"
+        }
+    },
+    {
+        "model": "passhint.rule",
+        "pk": 3,
+        "fields": {
+            "created_at": "2018-02-03T12:33:11.091Z",
+            "updated_at": "2018-03-01T17:09:27.620Z",
+            "name": "len_max",
+            "regex": "^[ \\S]{,{len}}$",
+            "regex_result": true,
+            "desc_ko": "\ube44\ubc00\ubc88\ud638 \ucd5c\ub300 \uae38\uc774 : {len}",
+            "desc_en": "Maximum length of password : {len}",
+            "desc_short": "maximum : {len}",
+            "error_ko": "\ube44\ubc00\ubc88\ud638 \uae38\uc774\uac00 {len} \uae00\uc790 \ubcf4\ub2e4 \uae41\ub2c8\ub2e4",
+            "error_en": "Your password is longer then {len} letters",
+            "guide_ko": "\ube44\ubc00\ubc88\ud638\uc758 \uae38\uc774\ub294 \ucd5c\ub300 123 \uae00\uc790 \uc774\ud558\uc5ec\uc57c \ud569\ub2c8\ub2e4.",
+            "guide_en": "Length of the password  should be shorter that 123 characters.",
+            "level": "info"
+        }
+    },
+    {
+        "model": "passhint.rule",
+        "pk": 4,
+        "fields": {
+            "created_at": "2018-02-03T12:33:54.025Z",
+            "updated_at": "2018-03-01T17:15:04.781Z",
+            "name": "exc_special",
+            "regex": "[^a-zA-Z0-9 ]",
+            "regex_result": false,
+            "desc_ko": "\ud2b9\uc218\ubb38\uc790 \uae08\uc9c0",
+            "desc_en": "Must NOT contain Special character",
+            "desc_short": "NO SPECIAL",
+            "error_ko": "\ud2b9\uc218\ubb38\uc790\uac00 \ud3ec\ud568\ub418\uc5b4\uc788\uc2b5\ub2c8\ub2e4",
+            "error_en": "Your password contains Special character",
+            "guide_ko": "\ube44\ubc00\ubc88\ud638\uc5d0 \ud2b9\uc218\ubb38\uc790\uac00 \ud3ec\ud568\ub418\uc5b4\uc11c\ub294 \uc548\ub429\ub2c8\ub2e4.",
+            "guide_en": "The password must not contain special character.",
+            "level": "danger"
+        }
+    },
+    {
+        "model": "passhint.rule",
+        "pk": 5,
+        "fields": {
+            "created_at": "2018-02-03T12:34:36.046Z",
+            "updated_at": "2018-03-01T17:15:53.252Z",
+            "name": "exc_space",
+            "regex": "[ ]",
+            "regex_result": false,
+            "desc_ko": "\uacf5\ubc31 \uae08\uc9c0",
+            "desc_en": "Must NOT contain empty space",
+            "desc_short": "NO SPACE",
+            "error_ko": "\uacf5\ubc31\uc774 \ud3ec\ud568\ub418\uc5b4\uc788\uc2b5\ub2c8\ub2e4",
+            "error_en": "Your password contains empty space",
+            "guide_ko": "\ube44\ubc00\ubc88\ud638\uc5d0 \uacf5\ubc31\uc774 \ud3ec\ud568\ub418\uc5b4\uc11c\ub294 \uc548\ub429\ub2c8\ub2e4.",
+            "guide_en": "The password must not contain empty space.",
+            "level": "danger"
+        }
+    },
+    {
+        "model": "passhint.rule",
+        "pk": 6,
+        "fields": {
+            "created_at": "2018-02-03T12:35:19.386Z",
+            "updated_at": "2018-03-01T17:19:11.755Z",
+            "name": "exc_same",
+            "regex": "(\\d)\\1\\1",
+            "regex_result": false,
+            "desc_ko": "\ub3d9\uc77c\ud55c \ubb38\uc790 \ubc18\ubcf5 \uae08\uc9c0",
+            "desc_en": "Must NOT contain repeated letters",
+            "desc_short": "NO 555, bbb",
+            "error_ko": "\ub3d9\uc77c\ud55c \ubb38\uc790\uac00 \ubc18\ubcf5\uc801\uc73c\ub85c \uc0ac\uc6a9\ub418\uc5c8\uc2b5\ub2c8\ub2e4",
+            "error_en": "Your password contains repeated letters",
+            "guide_ko": "\ube44\ubc00\ubc88\ud638\uc5d0 \ub3d9\uc77c\ud55c \ubb38\uc790\uac00 \uc5f0\uc18d\ub418\uc5b4\uc11c\ub294 \uc548\ub429\ub2c8\ub2e4. (ex. 111, ppp)",
+            "guide_en": "The password must not contain the same sequence of characters. (ex. 111, ppp)",
+            "level": "danger"
+        }
+    },
+    {
+        "model": "passhint.rule",
+        "pk": 7,
+        "fields": {
+            "created_at": "2018-02-03T12:36:40.603Z",
+            "updated_at": "2018-03-01T17:17:51.665Z",
+            "name": "exc_series",
+            "regex": "(012|123|234|345|456|567|678|789|890|098|987|876|765|654|543|432|321|210)",
+            "regex_result": false,
+            "desc_ko": "\uc5f0\uc18d\ub41c \ubb38\uc790 \uc0ac\uc6a9 \uae08\uc9c0",
+            "desc_en": "Must NOT contain consecutive letters",
+            "desc_short": "NO 123, ABC",
+            "error_ko": "\uc5f0\uc18d\ub418\ub294 \ubb38\uc790\uac00 \ud3ec\ud568\ub418\uc5b4\uc788\uc2b5\ub2c8\ub2e4",
+            "error_en": "Your password contains consecutive letters",
+            "guide_ko": "\ube44\ubc00\ubc88\ud638\uc5d0 \uc5f0\uc18d\ub41c \ubb38\uc790\uac00 \ud3ec\ud568\ub418\uc5b4\uc11c\ub294 \uc548\ub429\ub2c8\ub2e4. (ex. 234, 543, abc)",
+            "guide_en": "The password must not contain consecutive numbers. (ex. 234, 543, abc)",
+            "level": "danger"
+        }
+    },
+    {
+        "model": "passhint.rule",
+        "pk": 8,
+        "fields": {
+            "created_at": "2018-02-03T12:39:22.923Z",
+            "updated_at": "2018-03-01T17:20:14.711Z",
+            "name": "exc_common",
+            "regex": null,
+            "regex_result": false,
+            "desc_ko": "\uc77c\ubc18\uc801\uc778 \ud328\ud134 \uc0ac\uc6a9 \uae08\uc9c0",
+            "desc_en": "Must NOT contain common word or pattern.",
+            "desc_short": "NO COMMON PATTERN",
+            "error_ko": "(\uc8fc\uc758)\uc77c\ubc18\uc801\uc73c\ub85c \uc0ac\uc6a9\ub418\ub294 \ub2e8\uc5b4\ub098 \ud328\ud134\uc744 \ud3ec\ud568\ud560 \uc218 \uc5c6\uc2b5\ub2c8\ub2e4.",
+            "error_en": "(warning)Your password contains common word or pattern",
+            "guide_ko": "\ube44\ubc00\ubc88\ud638\uc5d0 \uc77c\ubc18\uc801\uc778 \ud328\ud134\uc774 \ud3ec\ud568\ub418\uc5b4\uc11c\ub294 \uc548\ub429\ub2c8\ub2e4.",
+            "guide_en": "The password should not contain common patterns.",
+            "level": "danger"
+        }
+    },
+    {
+        "model": "passhint.rule",
+        "pk": 9,
+        "fields": {
+            "created_at": "2018-02-03T12:40:07.228Z",
+            "updated_at": "2018-03-01T17:11:21.139Z",
+            "name": "inc_special",
+            "regex": "[^a-zA-Z0-9 ]",
+            "regex_result": true,
+            "desc_ko": "\ud2b9\uc218\ubb38\uc790 \ud544\uc218",
+            "desc_en": "Must contain special character",
+            "desc_short": "SPECIAL",
+            "error_ko": "\ud2b9\uc218\ubb38\uc790\ub97c \ud3ec\ud568\ud574\uc57c \ud569\ub2c8\ub2e4",
+            "error_en": "Your password does not contain special character",
+            "guide_ko": "\ube44\ubc00\ubc88\ud638\uc5d0 \ud2b9\uc218\ubb38\uc790\uac00 \ubb34\uc870\uac74 \ud3ec\ud568\ub418\uc5b4\uc788\uc5b4\uc57c \ud569\ub2c8\ub2e4.",
+            "guide_en": "The password must contain special character.",
+            "level": "success"
+        }
+    },
+    {
+        "model": "passhint.rule",
+        "pk": 10,
+        "fields": {
+            "created_at": "2018-02-03T12:40:43.420Z",
+            "updated_at": "2018-03-01T17:12:58.970Z",
+            "name": "inc_lower",
+            "regex": "[a-z]",
+            "regex_result": true,
+            "desc_ko": "\uc18c\ubb38\uc790 \ud544\uc218",
+            "desc_en": "Must contain lowercase character",
+            "desc_short": "LOWER",
+            "error_ko": "\uc18c\ubb38\uc790\ub97c \ud3ec\ud568\ud574\uc57c \ud569\ub2c8\ub2e4",
+            "error_en": "Your password does not contain lowercase character",
+            "guide_ko": "\ube44\ubc00\ubc88\ud638\uc5d0 \uc18c\ubb38\uc790\uac00 \ubb34\uc870\uac74 \ud3ec\ud568\ub418\uc5b4\uc788\uc5b4\uc57c \ud569\ub2c8\ub2e4.",
+            "guide_en": "The password must contain lowercase letters.",
+            "level": "success"
+        }
+    },
+    {
+        "model": "passhint.rule",
+        "pk": 11,
+        "fields": {
+            "created_at": "2018-02-03T12:41:18.412Z",
+            "updated_at": "2018-03-01T17:10:23.256Z",
+            "name": "inc_upper",
+            "regex": "[A-Z]",
+            "regex_result": true,
+            "desc_ko": "\ub300\ubb38\uc790 \ud544\uc218",
+            "desc_en": "Must contain uppercase character",
+            "desc_short": "UPPER",
+            "error_ko": "\ub300\ubb38\uc790\ub97c \ud3ec\ud568\ud574\uc57c \ud569\ub2c8\ub2e4",
+            "error_en": "Your password does not contain uppercase character",
+            "guide_ko": "\ube44\ubc00\ubc88\ud638\uc5d0 \ub300\ubb38\uc790\uac00 \ubb34\uc870\uac74 \ud3ec\ud568\ub418\uc5b4\uc788\uc5b4\uc57c \ud569\ub2c8\ub2e4.",
+            "guide_en": "The password must contain an uppercase letter.",
+            "level": "success"
+        }
+    },
+    {
+        "model": "passhint.rule",
+        "pk": 12,
+        "fields": {
+            "created_at": "2018-02-03T12:41:55.138Z",
+            "updated_at": "2018-03-01T17:12:12.432Z",
+            "name": "inc_number",
+            "regex": "[0-9]",
+            "regex_result": true,
+            "desc_ko": "\uc22b\uc790 \ud544\uc218",
+            "desc_en": "Must contain number",
+            "desc_short": "NUMBER",
+            "error_ko": "\uc22b\uc790\ub97c \ud3ec\ud568\ud574\uc57c \ud569\ub2c8\ub2e4",
+            "error_en": "Your password does not contain number",
+            "guide_ko": "\ube44\ubc00\ubc88\ud638\uc5d0  \uc22b\uc790\uac00 \ubb34\uc870\uac74 \ud3ec\ud568\ub418\uc5b4\uc788\uc5b4\uc57c \ud569\ub2c8\ub2e4.",
+            "guide_en": "The password must contain a number.",
+            "level": "success"
+        }
+    },
+    {
+        "model": "passhint.rule",
+        "pk": 13,
+        "fields": {
+            "created_at": "2018-02-03T12:42:27.101Z",
+            "updated_at": "2018-03-01T17:15:09.728Z",
+            "name": "inc_letter",
+            "regex": "[a-zA-Z]",
+            "regex_result": true,
+            "desc_ko": "\ubb38\uc790 \ud544\uc218",
+            "desc_en": "Must contain letter",
+            "desc_short": "LETTER",
+            "error_ko": "\ubb38\uc790\ub97c \ud3ec\ud568\ud574\uc57c \ud569\ub2c8\ub2e4",
+            "error_en": "Your password does not contain letter",
+            "guide_ko": "\ube44\ubc00\ubc88\ud638\uc5d0 \ub300,\uc18c\ubb38\uc790 \uad6c\ubd84 \uc5c6\uc774 \ubb38\uc790\uac00 \ubb34\uc870\uac74 \ud3ec\ud568\ub418\uc5b4\uc788\uc5b4\uc57c \ud569\ub2c8\ub2e4.",
+            "guide_en": "The password must contain letters, regardless of case.",
+            "level": "success"
+        }
+    },
+    {
+        "model": "passhint.rule",
+        "pk": 14,
+        "fields": {
+            "created_at": "2018-02-03T12:44:02.168Z",
+            "updated_at": "2018-03-01T17:19:43.835Z",
+            "name": "exc_id",
+            "regex": null,
+            "regex_result": false,
+            "desc_ko": "\uc544\uc774\ub514 \ud3ec\ud568 \uae08\uc9c0",
+            "desc_en": "Must NOT contain ID",
+            "desc_short": "NO ID",
+            "error_ko": "(\uc8fc\uc758)\uc544\uc774\ub514\ub97c \ud3ec\ud568\ud560 \uc218 \uc5c6\uc2b5\ub2c8\ub2e4",
+            "error_en": "(warning)Be careful of containing ID",
+            "guide_ko": "\ube44\ubc00\ubc88\ud638\uc5d0 \uc544\uc774\ub514\uac00 \ud3ec\ud568\ub418\uc5b4\uc11c\ub294 \uc548\ub429\ub2c8\ub2e4.",
+            "guide_en": "The password must not contain your ID.",
+            "level": "danger"
+        }
+    }
+]
