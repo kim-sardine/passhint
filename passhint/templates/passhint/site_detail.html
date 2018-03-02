@@ -15,7 +15,7 @@
             {{ site.main_url|get_anchor_tag }}
         </p>
         <hr class="my-4">
-        <h4>Passhint</h4>
+        <h4>passhint</h4>
         
         {% if site.get_recent_ruleset %}
          
@@ -33,7 +33,7 @@
             
 
         {% else %}
-            <h4>{% trans "No Passhint yet. Chance to be the first passhinter" %}</h4>
+            <h4>{% trans "No passhint yet. Chance to be the first passhinter" %}</h4>
         {% endif %}
     </div>
     <div class="col-lg-4 mt-4 mt-lg-0">
@@ -51,7 +51,7 @@
                 </li>
                 <li class="list-group-item">
                     <div>
-                        <h6 class="my-0">{% trans "Passhint Reporter" %}</h6>
+                        <h6 class="my-0">{% trans "passhint Reporter" %}</h6>
                         {% if site.get_recent_ruleset %}
                             <strong>{{ site.get_recent_ruleset.user.username }}</strong>
                             <span> at {{ site.get_recent_ruleset.created_at }}</span>
