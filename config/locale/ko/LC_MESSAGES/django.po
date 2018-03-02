@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-02 22:53+0900\n"
+"POT-Creation-Date: 2018-03-02 23:28+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -39,11 +39,11 @@ msgid "Joined at"
 msgstr "가입일자"
 
 #: accounts/templates/accounts/profile.html:40
-msgid "Passhinter's history"
-msgstr "passhinter 기록"
+msgid "passhinter history"
+msgstr "passhinter 일지"
 
 #: accounts/templates/accounts/profile.html:46
-msgid "Passhint report"
+msgid "passhint report"
 msgstr "passhint 제보"
 
 #: accounts/templates/accounts/profile.html:68
@@ -104,7 +104,7 @@ msgid "Rule Guide"
 msgstr "규칙 가이드"
 
 #: passhint/templates/passhint/site_detail.html:36
-msgid "No Passhint yet. Chance to be the first passhinter"
+msgid "No passhint yet. Chance to be the first passhinter"
 msgstr "아직 등록되지 않았습니다. 첫 passhinter 가 되어보세요 "
 
 #: passhint/templates/passhint/site_detail.html:42
@@ -116,7 +116,7 @@ msgid "Site Reporter"
 msgstr "사이트 제보자"
 
 #: passhint/templates/passhint/site_detail.html:54
-msgid "Passhint Reporter"
+msgid "passhint Reporter"
 msgstr "passhint 제보자"
 
 #: passhint/templates/passhint/site_detail.html:59
@@ -147,21 +147,29 @@ msgstr "첫 passhint가 되고 포인트를 얻으세요"
 msgid "Report"
 msgstr "제보"
 
-#: passhint/templates/passhint/site_search.html:19
+#: passhint/templates/passhint/site_search.html:20
 msgid "No Result Found"
 msgstr "검색 결과가 없습니다"
 
-#: passhint/templates/passhint/site_search.html:21
+#: passhint/templates/passhint/site_search.html:22
 msgid "If you do not have the site you want, please report the site."
 msgstr "찾으시는 사이트가 없다면 직접 제보해보세요"
 
-#: passhint/templates/passhint/site_search.html:22
+#: passhint/templates/passhint/site_search.html:23
 msgid "You can be the only reporter. And can get points!!"
 msgstr "유일한 제보자가 될 수 있고 포인트를 얻을 수 있습니다"
 
-#: passhint/templates/passhint/site_search.html:23
+#: passhint/templates/passhint/site_search.html:24
 msgid "Report Site"
 msgstr "사이트 제보"
+
+#: report/forms.py:15
+msgid "Site Name"
+msgstr "사이트 이름"
+
+#: report/forms.py:16
+msgid "Main URL"
+msgstr "메인 URL"
 
 #: report/forms.py:32
 msgid "This site already exists"
@@ -180,25 +188,23 @@ msgid "Update passhint of"
 msgstr "passhint 업데이트 - "
 
 #: report/templates/report/report_ruleset.html:62
-#: report/templates/report/report_site.html:38
-msgid "Submit"
-msgstr "제출"
-
-#: report/templates/report/report_ruleset.html:71
-msgid "Your submission will be reviewed and approved."
-msgstr "제출물은 심사 후 승인됩니다"
-
-#: report/templates/report/report_site.html:10
-msgid "Report new site and get points"
-msgstr "사이트를 제보하고 포인트를 받으세요"
-
 #: report/templates/report/report_site.html:37
 msgid "Your submission will be reviewed and approved"
 msgstr "제출물은 심사 후 승인됩니다"
 
-#: report/templates/report/report_site.html:59
-msgid "Table of Points"
+#: report/templates/report/report_ruleset.html:63
+#: report/templates/report/report_site.html:38
+msgid "Submit"
+msgstr "제출"
+
+#: report/templates/report/report_ruleset.html:73
+#: report/templates/report/report_site.html:49
+msgid "Point table"
 msgstr "포인트 테이블"
+
+#: report/templates/report/report_site.html:10
+msgid "Report new site and get points"
+msgstr "사이트를 제보하고 포인트를 받으세요"
 
 #: venv/lib/python3.5/site-packages/django/contrib/messages/apps.py:7
 msgid "Messages"
@@ -1506,3 +1512,9 @@ msgstr ""
 #, python-format
 msgid "%s: error: %s\n"
 msgstr ""
+
+#~ msgid "Your submission will be reviewed and approved."
+#~ msgstr "제출물은 심사 후 승인됩니다"
+
+#~ msgid "Table of Points"
+#~ msgstr "포인트 테이블"
