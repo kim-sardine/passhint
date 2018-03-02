@@ -3,6 +3,7 @@
 {% load passhint_extras %}
 {% block title %}{{keyword}} | Search | passhint{% endblock title %}
 {% block passhint_content %}
+{% get_current_language as LANGUAGE_CODE %}
 {% if sites %} 
     {% for site in sites %}
         <div class="card mb-4">
@@ -10,7 +11,7 @@
                 <a href="{% url "passhint:site_detail" site.name %}">
                     <h4 class="card-title">{{ site.name }}</h4>
                 </a>
-                {% get_html_rule site.get_recent_ruleset.get_true_rule_list 'desc_short' %}
+                {% get_html_rule site.get_recent_ruleset.get_true_rule_list LANGUAGE_CODE %}
             </div>
         </div>
     {% endfor %} 
