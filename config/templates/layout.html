@@ -1,12 +1,18 @@
 {% load static %}
 <!doctype html>
 <html>
-
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="description" content="Let's take the messy password rules in one shot.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta property="og:type" content="website" >
+    <meta property="og:site_name" content="passhint" >
+    <meta property="og:title" content="passhint" >
+    <meta property="og:url" content="https://passhint.info/" >
+    <meta property="og:description" content="Let's take the messy password rules in one shot." >
+    <meta property="og:image" content="{% static "img/favicon.png" %}" >
     <title>{% block title %}passhint{% endblock %}</title>
     <link rel="shortcut icon" type="image/png" href="{% static "img/favicon.png" %}"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <link href="{% static "css/style.css" %}" media="all" rel="Stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link href="{% static "assets/css/jquery-ui.css" %}" media="all" rel="Stylesheet" type="text/css" />
