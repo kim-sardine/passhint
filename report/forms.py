@@ -12,8 +12,8 @@ class ReportSiteForm(forms.ModelForm):
         model = ReportSite
         fields = ('name', 'main_url')
         labels = {
-            "name": "Site Name",
-            "main_url": "Main URL"
+            "name": _("Site Name"),
+            "main_url": _("Main URL")
             }
         help_texts = {
             'name': 'ex) Github, Samsung, Facebook',

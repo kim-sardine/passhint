@@ -27,7 +27,7 @@ def report_site(request):
             # TODO Report Success Message : 제보 완료.. 등록까지 시간이 걸려요
             return redirect('main')
     else:    
-        form = ReportSiteForm()
+        form = ReportSiteForm(label_suffix='')
 
     name = request.GET.get('name', '')
     url = request.GET.get('url', '')

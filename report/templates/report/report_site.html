@@ -34,7 +34,7 @@
                     {% include "form/base.html" with form=form element=form.main_url value=url %}
 
                     <div class="text-right mt-2">
-                        <span class="text-muted">{% trans "Your submission will be reviewed and approved" %}</span>
+                        <span class="text-muted mr-2">{% trans "Your submission will be reviewed and approved" %}</span>
                         <button type="submit" class="btn btn-secondary">{% trans "Submit" %}</button>
                     </div>
                 </div>
@@ -44,17 +44,9 @@
     </div>
 
     <div class="col-lg-4 mt-4 mt-lg-0">
-
-        {% comment %} TODO Report 부분 가이드 문서 링크 {% endcomment %}
-        {% comment %} <div>
-            <div class="p-4 border rounded">
-                <a class="btn btn-info btn-block" href="#">{% trans "Report Guide" %}</a>
-            </div>
-        </div> {% endcomment %}
-
         <div>    
             <div class="my-4">
-                <h4>{% trans "Table of Points" %}</h4>
+                <h4>{% trans "Point table" %}</h4>
             </div>
             <div class="p-4 border rounded">
                 {% include "report/point_table.html" with point_dict=point_dict %}
