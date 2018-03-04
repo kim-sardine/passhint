@@ -75,7 +75,7 @@ class LogPoint(models.Model):
 
 class LogAPISearch(models.Model):
 
-    url = models.CharField(max_length=30, blank=True, null=True)
+    url = models.CharField(max_length=100, blank=True, null=True)
     result = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 

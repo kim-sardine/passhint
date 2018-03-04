@@ -14,21 +14,29 @@ class passhint(APIView):
     def get(self, request, format=None):
 
         url = request.query_params.get('url')
+        rule_format = request.query_params.get('rule_format')
 
         # SEARCH SITE BY URL
         search_result = Site.search_by_url(url)
-        results = []
         log_site_name_list = []
+
+        results = []
 
         # GET TRUE RULESET
         for site in search_result:
             ruleset = site.get_recent_ruleset
             if ruleset:
                 rule_list = ruleset.get_true_rule_list
-                rule_html = get_html_rule(rule_list, 'desc_en')
-                result = {'name' : site.name, 'rule_html' : rule_html}
+
+                if rule_format == 'html':
+                    rule_html_en = get_html_rule(rule_list, 'short')
+                    rule_html_ko = get_html_rule(rule_list, 'ko')
+                    result = {'name' : site.name, 'rule_html_en' : rule_html_en, 'rule_html_ko' : rule_html_ko}
+                else:
+                    result = {'name' : site.name, 'rule_list' : rule_list}
                 results.append(result)
 
+                # log 기록을 위해 site 이름 저장
                 log_site_name_list.append(site.name)
 
         # 검색 결과 로그 저장
@@ -37,6 +45,6 @@ class passhint(APIView):
         
         # RETURN THEM
         if results:
-            return JsonResponse({'results' :results}, status=status.HTTP_200_OK)
+            return Response({'results' :results}, status=status.HTTP_200_OK)
         else:
-            return JsonResponse({'results': 'error'}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'results': 'error'}, status=status.HTTP_404_NOT_FOUND)
