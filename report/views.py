@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.utils.translation import ugettext_lazy as _
+from django.contrib import messages
 
 from passhint.models import Site
 from passhint.common import POINT_DICT
@@ -24,8 +26,10 @@ def report_site(request):
             reporter_profile = request.user.profile
             reporter_profile.set_point('Site : report')
 
-            # TODO Report Success Message : 제보 완료.. 등록까지 시간이 걸려요
+            messages.success(request, _('Report complete! It takes time to review.'))
             return redirect('main')
+        else:
+            messages.error(request, _('Invalid form. Please try agiain'))
     else:    
         form = ReportSiteForm(label_suffix='')
 
@@ -40,7 +44,7 @@ def report_site(request):
         'nav_report_site' : 'active',
     })
 
-# TODO passhint 확인 가이드가 필요할 듯
+
 # 사이트에 대한 RuleSet 등록
 @login_required
 def report_ruleset(request, site_name):
@@ -49,9 +53,9 @@ def report_ruleset(request, site_name):
 
     # 최대 Report-RuleSet 갯수 : 10개 / 1일
     if ReportRuleSet.get_count_recent_1day(request.user) >= MAXIMUM_REPORT_RULESET_NUMBER:
-        # TODO 한도 초과 Message : 하루 최대 10개까지 제보 가능합니다
+        messages.warning(request, _('You can report up to 10 per day'))
         return redirect('passhint:site_detail', site_name=site_name)
-                
+
     if request.method == 'POST':
         form = ReportRuleSetForm(request.POST)
 
@@ -64,8 +68,10 @@ def report_ruleset(request, site_name):
             reporter_profile = request.user.profile
             reporter_profile.set_point('Passhint : report')
 
-            # TODO Report Success Message : 제보 완료..
+            messages.warning(request, _('Report complete!'))
             return redirect('passhint:site_detail', site_name=site_name)
+        else:
+            messages.error(request, _('Invalid form. Please try agiain'))
     else:
         old_ruleset = site.get_recent_ruleset
         form = ReportRuleSetForm(instance=old_ruleset, label_suffix='')

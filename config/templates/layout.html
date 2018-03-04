@@ -24,7 +24,10 @@
 <body>
     {% include "navbar.html" %}
 
+    {% include "messages.html" %}
+
     {% block content %} {% endblock %}
+    
     <link href="{% static "assets/css/bootstrap.min.css" %}" media="all" rel="Stylesheet" type="text/css" />
     <script src="{% static "assets/js/popper.min.js" %}"></script>
     <script src="{% static "assets/js/bootstrap.min.js" %}"></script>

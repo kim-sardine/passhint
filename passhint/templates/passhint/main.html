@@ -1,124 +1,121 @@
-{% extends "layout.html" %}
+{% extends "passhint/layout.html" %}
 {% load i18n %}
 {% load static %}
-{% block content %}
-    <div class="container">
-        <div class="text-center my-5">
-            <h1 class="display-4">passhint</h1>
-        </div>
-
-        <div class="offset-md-3 col-md-6">
-            <form class="form-inline text-center" method="post">
-                {% csrf_token %}
-                <input type="text" name="keyword" class="form-control" id="search_name" placeholder="Search" aria-label="Search" maxlength="30"
-                    required style="width: 90%;">
-                <button type="submit" class="my-button" style="width: 10%;">
-                    <i class="material-icons" style="line-height: unset;">search</i>
-                </button>
-            </form>
-        </div>
-
-        <div class="card-deck mt-5">
-            <div class="card mb-4 box-shadow">
-                <div class="card-header text-center">
-                    <h5 class="my-0 font-weight-normal">{% trans "All-time ranking" %}</h5>
-                </div>
-                <div class="card-body px-3 py-0">
-                    <ul class="list-group list-group-flush">
-                        {% for site in all_time_ranking %}
-                            <li class="list-group-item text-truncate">
-                                 {{ forloop.counter }}. <a class="text-info" href="{% url "passhint:site_detail" site.name %}">{{site.name}}</a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
-            <div class="card mb-4 box-shadow">
-                <div class="card-header text-center">
-                    <h5 class="my-0 font-weight-normal">{% trans "This weak ranking" %}</h5>
-                </div>
-                <div class="card-body px-3 py-0">
-                    <ul class="list-group list-group-flush">
-                        {% for site_name in this_weak_ranking %}
-                        <li class="list-group-item text-truncate">
-                            {{ forloop.counter }}.
-                            <a class="text-info" href="{% url "passhint:site_detail" site_name %}">{{site_name}}</a>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
-            <div class="card mb-4 box-shadow">
-                <div class="card-header text-center">
-                    <h5 class="my-0 font-weight-normal">{% trans "New site" %}</h5>
-                </div>
-                <div class="card-body px-3 py-0">
-                    <ul class="list-group list-group-flush">
-                        {% for site in new_site_list %}
-                        <li class="list-group-item text-truncate">
-                            {{ forloop.counter }}.
-                            <a class="text-info" href="{% url "passhint:site_detail" site.name %}">{{site.name}}</a>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
-            <div class="card mb-4 box-shadow">
-                <div class="card-header text-center">
-                    <h5 class="my-0 font-weight-normal">{% trans "Best passhinter" %}</h5>
-                </div>
-                <div class="card-body px-3 py-0">
-                    <ul class="list-group list-group-flush">
-                        {% for passhinter in best_passhinter %}
-                        <li class="list-group-item text-truncate">
-                            {{ forloop.counter }}.
-                            <a class="text-info" href="{% url "profile" passhinter.user.username %}">{{passhinter.user.username}}</a>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
-        </div>
-        
-        {% include "main_carousel.html" %}
-<!-- 
-        <hr class="my-5">
-        <div class="row featurette">
-            <div class="col-md-7">
-                <h2 class="featurette-heading">First featurette heading.
-                    <span class="text-muted">It'll blow your mind.</span>
-                </h2>
-                <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo
-                    cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-            </div>
-            <div class="col-md-5">
-                <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto" alt="500x500" style="width: 500px; height: 500px;"
-                    src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22500%22%20height%3D%22500%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20500%20500%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_1619e346c94%20text%20%7B%20fill%3A%23AAAAAA%3Bfont-weight%3Abold%3Bfont-family%3AArial%2C%20Helvetica%2C%20Open%20Sans%2C%20sans-serif%2C%20monospace%3Bfont-size%3A25pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_1619e346c94%22%3E%3Crect%20width%3D%22500%22%20height%3D%22500%22%20fill%3D%22%23EEEEEE%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22185.1328125%22%20y%3D%22261.278125%22%3E500x500%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E"
-                    data-holder-rendered="true">
-            </div>
-        </div>
-
-        <hr class="my-5">
-        <div class="row featurette">
-            <div class="col-md-7">
-                <h2 class="featurette-heading">First featurette heading.
-                    <span class="text-muted">It'll blow your mind.</span>
-                </h2>
-                <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo
-                    cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-            </div>
-            <div class="col-md-5">
-                <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto" alt="500x500" style="width: 500px; height: 500px;"
-                    src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22500%22%20height%3D%22500%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20500%20500%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_1619e346c94%20text%20%7B%20fill%3A%23AAAAAA%3Bfont-weight%3Abold%3Bfont-family%3AArial%2C%20Helvetica%2C%20Open%20Sans%2C%20sans-serif%2C%20monospace%3Bfont-size%3A25pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_1619e346c94%22%3E%3Crect%20width%3D%22500%22%20height%3D%22500%22%20fill%3D%22%23EEEEEE%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22185.1328125%22%20y%3D%22261.278125%22%3E500x500%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E"
-                    data-holder-rendered="true">
-            </div>
-        </div>
-         -->
-        {% include "footer.html" %}
+{% block passhint_content %}
+    <div class="text-center my-5">
+        <h1 class="display-4">passhint</h1>
     </div>
+
+    <div class="offset-md-3 col-md-6">
+        <form class="form-inline text-center" method="post">
+            {% csrf_token %}
+            <input type="text" name="keyword" class="form-control" id="search_name" placeholder="Search" aria-label="Search" maxlength="30"
+                required style="width: 90%;">
+            <button type="submit" class="my-button" style="width: 10%;">
+                <i class="material-icons" style="line-height: unset;">search</i>
+            </button>
+        </form>
+    </div>
+
+    <div class="card-deck mt-5">
+        <div class="card mb-4 box-shadow">
+            <div class="card-header text-center">
+                <h5 class="my-0 font-weight-normal">{% trans "All-time ranking" %}</h5>
+            </div>
+            <div class="card-body px-3 py-0">
+                <ul class="list-group list-group-flush">
+                    {% for site in all_time_ranking %}
+                        <li class="list-group-item text-truncate">
+                                {{ forloop.counter }}. <a class="text-info" href="{% url "passhint:site_detail" site.name %}">{{site.name}}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="card mb-4 box-shadow">
+            <div class="card-header text-center">
+                <h5 class="my-0 font-weight-normal">{% trans "This weak ranking" %}</h5>
+            </div>
+            <div class="card-body px-3 py-0">
+                <ul class="list-group list-group-flush">
+                    {% for site_name in this_weak_ranking %}
+                    <li class="list-group-item text-truncate">
+                        {{ forloop.counter }}.
+                        <a class="text-info" href="{% url "passhint:site_detail" site_name %}">{{site_name}}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="card mb-4 box-shadow">
+            <div class="card-header text-center">
+                <h5 class="my-0 font-weight-normal">{% trans "New site" %}</h5>
+            </div>
+            <div class="card-body px-3 py-0">
+                <ul class="list-group list-group-flush">
+                    {% for site in new_site_list %}
+                    <li class="list-group-item text-truncate">
+                        {{ forloop.counter }}.
+                        <a class="text-info" href="{% url "passhint:site_detail" site.name %}">{{site.name}}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="card mb-4 box-shadow">
+            <div class="card-header text-center">
+                <h5 class="my-0 font-weight-normal">{% trans "Best passhinter" %}</h5>
+            </div>
+            <div class="card-body px-3 py-0">
+                <ul class="list-group list-group-flush">
+                    {% for passhinter in best_passhinter %}
+                    <li class="list-group-item text-truncate">
+                        {{ forloop.counter }}.
+                        <a class="text-info" href="{% url "profile" passhinter.user.username %}">{{passhinter.user.username}}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    {% include "main_carousel.html" %}
+<!-- 
+    <hr class="my-5">
+    <div class="row featurette">
+        <div class="col-md-7">
+            <h2 class="featurette-heading">First featurette heading.
+                <span class="text-muted">It'll blow your mind.</span>
+            </h2>
+            <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo
+                cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+        </div>
+        <div class="col-md-5">
+            <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto" alt="500x500" style="width: 500px; height: 500px;"
+                src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22500%22%20height%3D%22500%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20500%20500%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_1619e346c94%20text%20%7B%20fill%3A%23AAAAAA%3Bfont-weight%3Abold%3Bfont-family%3AArial%2C%20Helvetica%2C%20Open%20Sans%2C%20sans-serif%2C%20monospace%3Bfont-size%3A25pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_1619e346c94%22%3E%3Crect%20width%3D%22500%22%20height%3D%22500%22%20fill%3D%22%23EEEEEE%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22185.1328125%22%20y%3D%22261.278125%22%3E500x500%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E"
+                data-holder-rendered="true">
+        </div>
+    </div>
+
+    <hr class="my-5">
+    <div class="row featurette">
+        <div class="col-md-7">
+            <h2 class="featurette-heading">First featurette heading.
+                <span class="text-muted">It'll blow your mind.</span>
+            </h2>
+            <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo
+                cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+        </div>
+        <div class="col-md-5">
+            <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto" alt="500x500" style="width: 500px; height: 500px;"
+                src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22500%22%20height%3D%22500%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20500%20500%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_1619e346c94%20text%20%7B%20fill%3A%23AAAAAA%3Bfont-weight%3Abold%3Bfont-family%3AArial%2C%20Helvetica%2C%20Open%20Sans%2C%20sans-serif%2C%20monospace%3Bfont-size%3A25pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_1619e346c94%22%3E%3Crect%20width%3D%22500%22%20height%3D%22500%22%20fill%3D%22%23EEEEEE%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22185.1328125%22%20y%3D%22261.278125%22%3E500x500%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E"
+                data-holder-rendered="true">
+        </div>
+    </div>
+        -->
     <script>
         window.onload = function () {
             var input = document.getElementById("search_name").focus();
         }
     </script>
-{% endblock content %}
+{% endblock passhint_content %}
