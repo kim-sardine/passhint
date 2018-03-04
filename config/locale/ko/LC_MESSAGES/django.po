@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-02 23:28+0900\n"
+"POT-Creation-Date: 2018-03-04 14:40+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -65,29 +65,29 @@ msgstr ""
 
 #: config/templates/main_carousel.html:13
 msgid "password rules are so different :("
-msgstr "비밀번호 규직은 너무 다양합니다 :("
+msgstr "사이트마다 다른 비밀번호 규칙 :("
 
 #: config/templates/main_carousel.html:19
 msgid "browse all password rule here! :)"
-msgstr "모든 비밀번호 규칙을 여기서 확인하세요 :)"
+msgstr "원하는 사이트의 비밀번호 규칙을 여기서 확인하세요 :)"
 
 #: config/templates/main_carousel.html:27
 msgid "passhint for chrome extension is Super Coool!"
-msgstr "passhint는 정말 멋진 크롬 익스텐션을 제공하고있습니다!"
+msgstr "정말 멋진 크롬 익스텐션을 이용하시면 더더욱 간편합니다!"
 
-#: passhint/templates/passhint/main.html:24
+#: passhint/templates/passhint/main.html:23
 msgid "All-time ranking"
 msgstr "전체 조회 순위"
 
-#: passhint/templates/passhint/main.html:38
+#: passhint/templates/passhint/main.html:37
 msgid "This weak ranking"
-msgstr "최근 1주일  조회 순위"
+msgstr "최근 1주일 조회 순위"
 
-#: passhint/templates/passhint/main.html:53
+#: passhint/templates/passhint/main.html:52
 msgid "New site"
 msgstr "새로 등록된 사이트"
 
-#: passhint/templates/passhint/main.html:68
+#: passhint/templates/passhint/main.html:67
 msgid "Best passhinter"
 msgstr "최고의 passhinter"
 
@@ -205,6 +205,22 @@ msgstr "포인트 테이블"
 #: report/templates/report/report_site.html:10
 msgid "Report new site and get points"
 msgstr "사이트를 제보하고 포인트를 받으세요"
+
+#: report/views.py:29
+msgid "Report complete! It takes time to review."
+msgstr "제보 완료! 심사 후 승인됩니다"
+
+#: report/views.py:32 report/views.py:74
+msgid "Invalid form. Please try agiain"
+msgstr "잘못 입력하셨습니다. 다시 시도해주세요"
+
+#: report/views.py:56
+msgid "You can report up to 10 per day"
+msgstr "하루에 10개의 passhint를 제보 할 수 있습니다"
+
+#: report/views.py:71
+msgid "Report complete!"
+msgstr "제보 완료!"
 
 #: venv/lib/python3.5/site-packages/django/contrib/messages/apps.py:7
 msgid "Messages"
