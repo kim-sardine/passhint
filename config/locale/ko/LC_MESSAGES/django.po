@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-04 14:40+0900\n"
+"POT-Creation-Date: 2018-03-12 21:04+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+#: accounts/templates/accounts/login_form.html:10
+msgid "Social Login"
+msgstr ""
 
 #: accounts/templates/accounts/profile.html:9
 msgid "User Information"
@@ -54,6 +58,14 @@ msgstr "아직 기록이 없습니다"
 #: accounts/templates/accounts/profile.html:74
 msgid "Site report"
 msgstr "사이트 제보"
+
+#: accounts/templates/accounts/signup_form.html:10
+msgid "Enter your additional information to complete signup"
+msgstr "추가 정보를 입력하시면 회원가입이 완료됩니다"
+
+#: accounts/templates/accounts/signup_form.html:46
+msgid "Email is Optional"
+msgstr "이메일은 선택 요소입니다"
 
 #: config/settings/base.py:152
 msgid "Korean"
