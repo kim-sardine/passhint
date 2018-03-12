@@ -1,12 +1,13 @@
 {% extends "accounts/layout.html" %}
 {% load widget_tweaks%}
+{% load i18n %}
 {% block title %}Signup | passhint{% endblock title %}
 {% block accounts_content %}
 <div class="row">
     <div class="col-md-8 offset-md-2">
         <div class="card">
             <div class="card-header text-center">
-                <h4>Enter your additional information to complete signup</h4>
+                <h4>{% trans "Enter your additional information to complete signup" %}</h4>
             </div>
             <div class="card-body">
                 <form action="" method="post">
@@ -42,7 +43,7 @@
                 </form>
             </div>
             <div class="card-footer text-muted text-center">
-                Email is Optional
+                {% trans "Email is Optional" %}
             </div>
         </div>
     </div>

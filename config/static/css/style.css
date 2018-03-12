@@ -54,6 +54,10 @@ html {
     background-color: #f8f9fa;
 }
 
+.dropdown-item.active, .dropdown-item:active {
+    background-color: transparent !important;
+}
+
 /* loading - the AJAX indicator */
 .ui-autocomplete-loading {
     background: white url('/static/img/loading_16.gif') right center no-repeat;

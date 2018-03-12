@@ -41,15 +41,15 @@
                                 <i class="material-icons" style="vertical-align: top;">person</i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="my_dropdown">
-                                <a class="dropdown-item" href="{% url "profile" user.username %}">Profile</a>
-                                <a class="dropdown-item" href="{% url "accounts:logout" %}">Logout</a>
+                                <a class="dropdown-item nav-link" href="{% url "profile" user.username %}">Profile</a>
+                                <a class="dropdown-item nav-link" href="{% url "accounts:logout" %}">Logout</a>
                             </div>
                         </li>
                     </ul>
                 {% else %}
                     <ul class="navbar-nav">
                         <li>
-                            <a class="dropdown-item" href="{% url "accounts:login" %}">Login</a>
+                            <a class="dropdown-item nav-link" href="{% url "accounts:login" %}">Login</a>
                         </li>
                     </ul>
                 {% endif %}

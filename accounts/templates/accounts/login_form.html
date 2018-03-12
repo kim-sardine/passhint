@@ -1,19 +1,20 @@
 {% extends "accounts/layout.html" %}
 {% load socialaccount %}
+{% load i18n %}
 {% block title %}Login | passhint{% endblock title %}
 {% block accounts_content %}
 <div class="row">
     <div class="col-md-4 offset-md-4">
         <div class="card">
             <div class="card-header text-center">
-                <h4>Social Login</h4>
+                <h4>{% trans "Social Login" %}</h4>
             </div>
             <div class="card-body text-center">
                 {% for provider in providers %}
                     {% if provider.social_app %}
                     <div class="m-4">
                         <a href="{% provider_login_url provider.id %}">
-                            <button type="button" class="btn btn-primary btn-lg btn-block">Join with {{ provider.name }}</button>
+                            <button type="button" class="btn btn-info btn-lg btn-block">{{ provider.name }} login</button>
                         </a>
                     </div>
                     {% else %}
