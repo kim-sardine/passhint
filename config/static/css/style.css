@@ -76,3 +76,7 @@ html {
 .ui-front {
     z-index: 1040 !important;  
 }
+
+.carousel-control-prev-icon, .carousel-control-next-icon {
+    height: 10% !important
+}
