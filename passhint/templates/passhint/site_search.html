@@ -6,14 +6,27 @@
 {% get_current_language as LANGUAGE_CODE %}
 {% if sites %} 
     {% for site in sites %}
-        <div class="card mb-4">
+    <div class="card mb-4">
+        {% if forloop.counter|divisibleby:"6" %}
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <ins class="adsbygoogle"
+                style="display:block"
+                data-ad-format="fluid"
+                data-ad-layout-key="-gw-3+1f-3d+2z"
+                data-ad-client="ca-pub-6608881102769100"
+                data-ad-slot="4353333048"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        {% else %}
             <div class="card-body p-3">
                 <a href="{% url "passhint:site_detail" site.name %}">
                     <h4 class="card-title">{{ site.name }}</h4>
                 </a>
                 {% get_html_rule site.get_recent_ruleset.get_true_rule_list LANGUAGE_CODE %}
             </div>
-        </div>
+        {% endif %}
+    </div>
     {% endfor %} 
 {% else %}
 <div class="jumbotron text-center" style="background-color:#f8f9fa">
