@@ -1,0 +1,71 @@
+{% load i18n %}
+<div>
+    <h4 class="mb-3 px-2">
+         {% trans "Information" %}
+    </h4>
+    <ul class="list-group mb-3">
+        <li class="list-group-item">
+            <div>
+                <h6 class="my-0">{% trans "Site Reporter" %}</h6>
+                <strong>{{ site.user.username }}</strong>
+                <span> at {{ site.created_at }}</span>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div>
+                <h6 class="my-0">{% trans "passhint Reporter" %}</h6>
+                {% if site.get_recent_ruleset %}
+                    <strong>{{ site.get_recent_ruleset.user.username }}</strong>
+                    <span> at {{ site.get_recent_ruleset.created_at }}</span>
+                {% else %}
+                    <span class="text-primary">{% trans "Be the first passhinter!" %}</span>
+                {% endif %}
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div>
+                <h6 class="my-0">{% trans "Hit" %}</h6>
+                <span>{{ site.hit }}</span>
+            </div>
+        </li>
+    </ul>
+</div>
+
+<div>
+    <h4 class="mb-3 px-2">
+        {% if site.get_recent_ruleset %}
+            {% trans "Update passhint" %}
+        {% else %}
+            {% trans "Report passhint" %}
+        {% endif %}
+    </h4>
+    <ul class="list-group mb-3">
+        <li class="list-group-item">
+            <div>
+                {% if site.get_recent_ruleset %}
+                    <h6 class="my-0">{% trans "Update passhint and get points!" %}</h6>
+                {% else %}
+                    {% trans "Be the first passhinter and get points!" %}
+                {% endif %}
+                <a class="btn btn-info btn-block mt-4" href="{% url "report:report_ruleset" site.name %}">{% trans "Report" %}</a>
+            </div>
+        </li>
+    </ul>
+</div>
+
+<div>
+    <ul class="list-group mt-4">
+        <li class="list-group-item">
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <!-- block_ad -->
+            <ins class="adsbygoogle"
+                    style="display:block"
+                    data-ad-client="ca-pub-6608881102769100"
+                    data-ad-slot="4081090054"
+                    data-ad-format="auto"></ins>
+            <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </li>
+    </ul>
+</div>
