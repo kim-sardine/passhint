@@ -149,7 +149,7 @@ class Rule(TimeStampedModel):
     def __str__(self):
         return '{}-{}'.format(self.name, self.desc_short)
 
-
+# XXX RULE SENSITIVE
 class BaseRuleSet(models.Model):
 
     len_min = models.SmallIntegerField(blank=True, null=True)
@@ -162,6 +162,7 @@ class BaseRuleSet(models.Model):
     exc_series = models.BooleanField(default=False)
     exc_common = models.BooleanField(default=False)
     
+    inc_2_of_letter_num_special = models.BooleanField(default=False)
     inc_special = models.BooleanField(default=False)
     inc_lower = models.BooleanField(default=False)
     inc_upper = models.BooleanField(default=False)
@@ -171,7 +172,7 @@ class BaseRuleSet(models.Model):
     class Meta:
         abstract = True
 
-
+# XXX RULE SENSITIVE
 class RuleSet(TimeStampedModel, BaseRuleSet):
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL)
@@ -183,7 +184,6 @@ class RuleSet(TimeStampedModel, BaseRuleSet):
     class Meta:
         ordering = ['-created_at']
 
-    # XXX RULE SENSITIVE
     @property
     def get_true_rule_list(self):
         
@@ -212,6 +212,9 @@ class RuleSet(TimeStampedModel, BaseRuleSet):
         
         if self.exc_common is True:
             result.append('exc_common')
+
+        if self.inc_2_of_letter_num_special is True:
+            result.append('inc_2_of_letter_num_special')
         
         if self.inc_special is True:
             result.append('inc_special')
@@ -227,5 +230,5 @@ class RuleSet(TimeStampedModel, BaseRuleSet):
         
         if self.inc_letter is True:
             result.append('inc_letter')
-
+        
         return result

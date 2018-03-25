@@ -39,7 +39,7 @@ class ReportSiteAdmin(admin.ModelAdmin):
     actions = [approve_site, reject_site, late_site,]
     list_display = ('name', 'main_url', 'user', 'status', 'created_at')
 
-# XXX RULE SENSITIVE
+
 def approve_ruleset(modeladmin, request, queryset):
     for report_ruleset in queryset:
 

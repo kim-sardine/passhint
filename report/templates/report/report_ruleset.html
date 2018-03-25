@@ -27,6 +27,7 @@
                         </div>
                     {% endif %}
 
+                    {% comment %} XXX RULE SENSITIVE {% endcomment %}
                     <div class="row">
                         <div class="col-lg-12 text-center mb-3 text-info">
                             <h4>LENGTH</h4>
@@ -39,6 +40,7 @@
                         <div class="col-lg-12 text-center my-3 text-success">
                             <h4>MUST</h4>
                         </div>
+                        {% include "form/report/ruleset_checkbox.html" with form=form element=form.inc_2_of_letter_num_special %}
                         {% include "form/report/ruleset_checkbox.html" with form=form element=form.inc_lower %}
                         {% include "form/report/ruleset_checkbox.html" with form=form element=form.inc_upper %}
                         {% include "form/report/ruleset_checkbox.html" with form=form element=form.inc_letter %}

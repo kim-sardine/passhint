@@ -34,7 +34,7 @@ class ReportSiteForm(forms.ModelForm):
         cleaned_data['name'] = name
         return cleaned_data
 
-# XXX RULE SENSITIVE
+
 class ReportRuleSetForm(forms.ModelForm):
     class Meta:
         model = ReportRuleSet

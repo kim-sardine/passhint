@@ -1,6 +1,7 @@
+# XXX RULE SENSITIVE
 RULE_LIST = ['len_min', 'len_max',
                     'exc_special','exc_space','exc_id','exc_same','exc_series','exc_id','exc_common',
-                    'inc_special','inc_lower','inc_upper','inc_number','inc_letter']
+                    'inc_2_of_letter_num_special', 'inc_special','inc_lower','inc_upper','inc_number','inc_letter']
 
 POINT_DICT = {
     'Site : report': 10,
