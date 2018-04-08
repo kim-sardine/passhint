@@ -149,6 +149,40 @@ class Rule(TimeStampedModel):
     def __str__(self):
         return '{}-{}'.format(self.name, self.desc_short)
 
+    @classmethod
+    def get_rule_by_name(cls, rule_name):
+        '''
+        input : rule name
+        output : rule
+        '''
+        try:
+            rule = cls.objects.get(name=rule_name)
+
+        except cls.DoesNotExist: # len_min_x 일 수 있으므로 확인
+            
+            rule_div = rule_name.split('_')
+
+            if len(rule_div) == 3 and rule_div[0] == 'len':
+                rule_name = '_'.join(rule_div[:2])
+
+                try:
+                    rule = cls.objects.get(name=rule_name)
+                    rule_len = rule_div[2]
+
+                    rule.regex = rule.regex.replace('{len}', rule_len)
+                    rule.desc_ko = rule.desc_ko.replace('{len}', rule_len)
+                    rule.desc_en = rule.desc_en.replace('{len}', rule_len)
+                    rule.desc_short = rule.desc_short.replace('{len}', rule_len)
+                    rule.error_ko = rule.error_ko.replace('{len}', rule_len)
+                    rule.error_en = rule.error_en.replace('{len}', rule_len)
+
+                except cls.DoesNotExist:
+                    return None
+            else:
+                return None
+
+        return rule
+
 # XXX RULE SENSITIVE
 class BaseRuleSet(models.Model):
 

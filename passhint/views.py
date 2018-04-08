@@ -9,7 +9,8 @@ from django.contrib import messages
 import json
 
 from .models import Site, Rule, RuleSet
-from .forms import SiteSearchForm
+from .forms import SiteSearchForm, InlinePwCheckForm
+from .utils import pw_check
 from log.models import LogSearch, LogSite
 from accounts.models import Profile
 
@@ -121,9 +122,12 @@ def site_detail(request, site_name):
 
     rules = Rule.objects.all()
 
+    form = InlinePwCheckForm()
+
     return render(request, 'passhint/site_detail.html', {
         'site' : site,
         'rules' : rules,
+        'form' : form,
         })
 
 @csrf_exempt
@@ -137,3 +141,22 @@ def autocomplete(request):
     results = [site.name for site in sites]
     
     return JsonResponse(results, safe=False)
+
+
+def inline_pw_check(request, site_name):
+    if request.method == 'POST':
+        form = InlinePwCheckForm(request.POST)
+        if form.is_valid():
+            pw = request.POST.get('pw')
+
+            if pw:
+                try:
+                    site = Site.objects.get(name=site_name)
+                    rule_list = site.get_recent_ruleset.get_true_rule_list
+                except:
+                    return JsonResponse({'result' : 'error'}, status=404)
+                
+                result, message = pw_check(pw, rule_list)
+                return JsonResponse({'result' : result, 'message' : message})
+                
+    return JsonResponse({'result' : 'error'}, status=400)

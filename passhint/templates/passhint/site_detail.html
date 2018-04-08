@@ -14,15 +14,15 @@
         <p>
             {{ site.main_url|get_anchor_tag }}
         </p>
+        
         <hr class="my-4">
-        <h4 class="px-2">passhint</h4>
+        <h3 class="px-2">passhint</h3>
         
         {% if site.get_recent_ruleset %}
          
             {% get_html_rule site.get_recent_ruleset.get_true_rule_list LANGUAGE_CODE %}
         
-            <hr class="my-4">
-
+            
             <div class="text-right">
                 <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#rule_guide_modal">
                     {% trans "Rule Guide" %}
@@ -34,10 +34,47 @@
         {% else %}
             <h4>{% trans "No passhint yet. Chance to be the first passhinter" %}</h4>
         {% endif %}
+
+        <hr class="my-4">
+        <h3 class="px-2">{% trans "In-line password check" %}</h3>
+        
+        <form id="inline-pw-check" data-url="{% url "passhint:inline_pw_check" site.name %}" method="post" onsubmit="return false;">
+            {% csrf_token %} 
+
+            <div class="form-group">
+                <div>
+                    <div>
+                        {{ form.pw|add_class:'form-control' }}
+                    </div>
+                    <div id="inline-pw-check-error" class="border my-3">
+                        <div class="alert alert-light m-0" role="alert">
+                            {% trans "Result will be printed here. Don't worry, we never abuse your password" %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <hr class="my-4">
+
     </div>
     <div class="col-lg-4 mt-4 mt-lg-0">
         {% include "passhint/site_detail_right_menu.html" %}
     </div>
 </div>
-<br>
+
+<script>
+    $(function () {
+        $('#inline-pw-check').keyup(function (e) {
+            var $form = $(this);
+            
+            if($form.find('#inline_pw_check')[0].value == '')
+                return;
+
+            var url = $form.attr('data-url');
+            var data = $form.serialize();
+            inline_pw_check(url, data, '{{LANGUAGE_CODE}}');
+        });
+    });
+</script>
+
 {% endblock passhint_content %}

@@ -6,14 +6,14 @@
     <ul class="list-group mb-3">
         <li class="list-group-item">
             <div>
-                <h6 class="my-0">{% trans "Site Reporter" %}</h6>
+                <h6 class="my-0">{% trans "Site reporter" %}</h6>
                 <strong>{{ site.user.username }}</strong>
                 <span> at {{ site.created_at }}</span>
             </div>
         </li>
         <li class="list-group-item">
             <div>
-                <h6 class="my-0">{% trans "passhint Reporter" %}</h6>
+                <h6 class="my-0">{% trans "passhint reporter" %}</h6>
                 {% if site.get_recent_ruleset %}
                     <strong>{{ site.get_recent_ruleset.user.username }}</strong>
                     <span> at {{ site.get_recent_ruleset.created_at }}</span>
