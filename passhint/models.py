@@ -110,6 +110,9 @@ class Site(TimeStampedModel):
         if url[:4] == 'www.':
             url = url[4:]
 
+        if Site.objects.filter(main_url__icontains=url).exists():
+            return Site.objects.filter(main_url__icontains=url).first()
+
         # . 을 기준으로 split 후 앞부터 돌면서 검사
         keyword_list = url.split(".")
 
